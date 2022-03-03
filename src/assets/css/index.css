@@ -2,21 +2,11 @@ html {
   background-color: #000;
 }
 
-.amplify-tabs {
-  display: none;
-}
-
-.joke {
-  font-size: 32px;
-  line-height: 1.5em;
-  margin-bottom: 25px;
-}
-
 .main-content {
   background-color: #fff;
   padding: 50px;
 }
 
-.site-administration {
-  margin-top: 50px;
+.main-heading {
+  text-align: center;
 }

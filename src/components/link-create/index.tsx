@@ -10,10 +10,10 @@ export interface LinkCreateProps {
 }
 
 const LinkCreate = ({ to }: LinkCreateProps): JSX.Element => {
-  const [errorMessage, setErrorMessage] = useState(undefined as string | undefined)
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined)
   const [isLoading, setIsLoading] = useState(false)
-  const [shortLink, setShortLink] = useState(undefined as string | undefined)
-  const [successMessage, setSuccessMessage] = useState(undefined as string | undefined)
+  const [shortLink, setShortLink] = useState<string | undefined>(undefined)
+  const [successMessage, setSuccessMessage] = useState<string | undefined>(undefined)
   const [url, setUrl] = useState(to ?? '')
 
   const generateShortLink = async () => {
