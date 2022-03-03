@@ -2,6 +2,7 @@ import Container from '@mui/material/Container'
 import React from 'react'
 import { Helmet } from 'react-helmet'
 
+import Authenticated from '@components/auth'
 import LinkCreate from '@components/link-create'
 
 import '@config/amplify'
@@ -19,8 +20,12 @@ const Index = (): JSX.Element => {
         <Helmet>
           <title>Short Link Generator | dbowland.com</title>
         </Helmet>
-        <h1>Short Link Generator</h1>
-        <LinkCreate to={to}></LinkCreate>
+        <h1 className="main-heading">Short Link Generator</h1>
+        <section>
+          <Authenticated>
+            <LinkCreate to={to}></LinkCreate>
+          </Authenticated>
+        </section>
       </main>
     </Container>
   )
