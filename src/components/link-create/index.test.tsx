@@ -48,6 +48,32 @@ describe('LinkCreate component', () => {
       expect(urlInput.value.length).toEqual(0)
     })
 
+    test('expect invalid URL returns error message', async () => {
+      render(<LinkCreate to="invalid-url" />)
+
+      const generateLinkButton: HTMLButtonElement = (await screen.findByText(/Generate short link/i, {
+        selector: 'button',
+      })) as HTMLButtonElement
+      await act(async () => {
+        await generateLinkButton.click()
+      })
+
+      expect(await screen.findByText(/Invalid URL/i)).toBeInTheDocument()
+    })
+
+    test('expect non-HTTP URL returns error message', async () => {
+      render(<LinkCreate to="ftp://dbowland.com" />)
+
+      const generateLinkButton: HTMLButtonElement = (await screen.findByText(/Generate short link/i, {
+        selector: 'button',
+      })) as HTMLButtonElement
+      await act(async () => {
+        await generateLinkButton.click()
+      })
+
+      expect(await screen.findByText(/URL must be http or https/i)).toBeInTheDocument()
+    })
+
     test('expect URL is passed to createLink when generate button is clicked and Loading displayed', async () => {
       render(<LinkCreate />)
 
