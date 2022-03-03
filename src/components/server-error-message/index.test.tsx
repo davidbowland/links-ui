@@ -4,7 +4,7 @@ import { screen, render } from '@testing-library/react'
 
 import ServerErrorMessage from './index'
 
-describe('Server error message component', () => {
+describe('ServerErrorMessage component', () => {
   const title = 'server-error-message'
   const children = 'Nothing to see here'
 
