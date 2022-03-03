@@ -66,6 +66,10 @@ Resources:
       DistributionConfig:
         Aliases:
           - !FindInMap [EnvironmentMap, !Ref Environment, domain]
+        CustomErrorResponses:
+          - ErrorCode: 404
+            ResponseCode: 200
+            ResponsePagePath: /index.html
         DefaultCacheBehavior:
           AllowedMethods:
             - 'GET'
