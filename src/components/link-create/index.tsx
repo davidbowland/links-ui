@@ -10,57 +10,67 @@ export interface LinkCreateProps {
 }
 
 const LinkCreate = ({ to }: LinkCreateProps): JSX.Element => {
-  const [error, setError] = useState(undefined as string | undefined)
+  const [errorMessage, setErrorMessage] = useState(undefined as string | undefined)
   const [isLoading, setIsLoading] = useState(false)
   const [shortLink, setShortLink] = useState(undefined as string | undefined)
-  const [success, setSuccess] = useState(undefined as string | undefined)
+  const [successMessage, setSuccessMessage] = useState(undefined as string | undefined)
   const [url, setUrl] = useState(to ?? '')
 
   const generateShortLink = async () => {
     try {
-      setIsLoading(true)
+      const protocol = new URL(url).protocol
+      if (protocol.match(/^https?:$/i) === null) {
+        setErrorMessage('URL must be http or https')
+        return
+      }
+    } catch (error) {
+      setErrorMessage('Invalid URL')
+      return
+    }
+
+    setIsLoading(true)
+    try {
       const newLink = await createLink(url)
       setShortLink(`${window.location.origin}/r/${newLink.linkId}`)
-      setError(undefined)
-      setIsLoading(false)
-    } catch (err) {
-      console.error('generateShortLink', err)
-      setError('Error generating short link, please try again later')
-      setIsLoading(false)
+      setErrorMessage(undefined)
+    } catch (error) {
+      console.error('generateShortLink', error)
+      setErrorMessage('Error generating short link, please try again later')
     }
+    setIsLoading(false)
   }
 
   const copyShortLink = () => {
     try {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       navigator.clipboard.writeText(shortLink!)
-      setSuccess('Link copied to clipboard')
-      setError(undefined)
+      setSuccessMessage('Link copied to clipboard')
+      setErrorMessage(undefined)
     } catch (err) {
       console.error('copyShortLink', err)
-      setError('Could not copy link to clipboard')
+      setErrorMessage('Could not copy link to clipboard')
     }
   }
 
   const newLink = () => {
-    setError(undefined)
+    setErrorMessage(undefined)
     setIsLoading(false)
     setShortLink(undefined)
-    setSuccess(undefined)
+    setSuccessMessage(undefined)
     setUrl('')
   }
 
   const generateAlerts = () => {
-    if (error) {
+    if (errorMessage) {
       return (
         <p>
-          <Alert severity="error">{error}</Alert>
+          <Alert severity="error">{errorMessage}</Alert>
         </p>
       )
-    } else if (success) {
+    } else if (successMessage) {
       return (
         <p>
-          <Alert severity="success">{success}</Alert>
+          <Alert severity="success">{successMessage}</Alert>
         </p>
       )
     }
