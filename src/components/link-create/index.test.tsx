@@ -37,21 +37,21 @@ describe('LinkCreate component', () => {
     test('expect "to" value is passed to URL', async () => {
       render(<LinkCreate to={url} />)
 
-      const urlInput: HTMLInputElement = (await screen.findByLabelText(/Target URL/i)) as HTMLInputElement
+      const urlInput = (await screen.findByLabelText(/Target URL/i)) as HTMLInputElement
       expect(urlInput.value).toEqual(url)
     })
 
     test('expect URL is empty when "to" is undefined', async () => {
       render(<LinkCreate />)
 
-      const urlInput: HTMLInputElement = (await screen.findByLabelText(/Target URL/i)) as HTMLInputElement
+      const urlInput = (await screen.findByLabelText(/Target URL/i)) as HTMLInputElement
       expect(urlInput.value.length).toEqual(0)
     })
 
     test('expect invalid URL returns error message', async () => {
       render(<LinkCreate to="invalid-url" />)
 
-      const generateLinkButton: HTMLButtonElement = (await screen.findByText(/Generate short link/i, {
+      const generateLinkButton = (await screen.findByText(/Generate short link/i, {
         selector: 'button',
       })) as HTMLButtonElement
       await act(async () => {
@@ -64,7 +64,7 @@ describe('LinkCreate component', () => {
     test('expect non-HTTP URL returns error message', async () => {
       render(<LinkCreate to="ftp://dbowland.com" />)
 
-      const generateLinkButton: HTMLButtonElement = (await screen.findByText(/Generate short link/i, {
+      const generateLinkButton = (await screen.findByText(/Generate short link/i, {
         selector: 'button',
       })) as HTMLButtonElement
       await act(async () => {
@@ -77,12 +77,12 @@ describe('LinkCreate component', () => {
     test('expect URL is passed to createLink when generate button is clicked and Loading displayed', async () => {
       render(<LinkCreate />)
 
-      const urlInput: HTMLInputElement = (await screen.findByLabelText(/Target URL/i)) as HTMLInputElement
+      const urlInput = (await screen.findByLabelText(/Target URL/i)) as HTMLInputElement
       act(() => {
         fireEvent.change(urlInput, { target: { value: url } })
       })
 
-      const generateLinkButton: HTMLButtonElement = (await screen.findByText(/Generate short link/i, {
+      const generateLinkButton = (await screen.findByText(/Generate short link/i, {
         selector: 'button',
       })) as HTMLButtonElement
       act(() => {
@@ -97,7 +97,7 @@ describe('LinkCreate component', () => {
       mocked(linkService).createLink.mockRejectedValueOnce(undefined)
       render(<LinkCreate to={url} />)
 
-      const generateLinkButton: HTMLButtonElement = (await screen.findByText(/Generate short link/i, {
+      const generateLinkButton = (await screen.findByText(/Generate short link/i, {
         selector: 'button',
       })) as HTMLButtonElement
       await act(async () => {
@@ -112,7 +112,7 @@ describe('LinkCreate component', () => {
     test('expect short link is returned when createLink resolves', async () => {
       render(<LinkCreate to={url} />)
 
-      const generateLinkButton: HTMLButtonElement = (await screen.findByText(/Generate short link/i, {
+      const generateLinkButton = (await screen.findByText(/Generate short link/i, {
         selector: 'button',
       })) as HTMLButtonElement
       await act(async () => {
@@ -126,14 +126,14 @@ describe('LinkCreate component', () => {
     test('expect copy invokes writeText and displays message', async () => {
       render(<LinkCreate to={url} />)
 
-      const generateLinkButton: HTMLButtonElement = (await screen.findByText(/Generate short link/i, {
+      const generateLinkButton = (await screen.findByText(/Generate short link/i, {
         selector: 'button',
       })) as HTMLButtonElement
       await act(async () => {
         await generateLinkButton.click()
       })
 
-      const copyLinkButton: HTMLButtonElement = (await screen.findByText(/Copy short link/i, {
+      const copyLinkButton = (await screen.findByText(/Copy short link/i, {
         selector: 'button',
       })) as HTMLButtonElement
       act(() => {
@@ -150,14 +150,14 @@ describe('LinkCreate component', () => {
       })
       render(<LinkCreate to={url} />)
 
-      const generateLinkButton: HTMLButtonElement = (await screen.findByText(/Generate short link/i, {
+      const generateLinkButton = (await screen.findByText(/Generate short link/i, {
         selector: 'button',
       })) as HTMLButtonElement
       await act(async () => {
         await generateLinkButton.click()
       })
 
-      const copyLinkButton: HTMLButtonElement = (await screen.findByText(/Copy short link/i, {
+      const copyLinkButton = (await screen.findByText(/Copy short link/i, {
         selector: 'button',
       })) as HTMLButtonElement
       act(() => {
@@ -171,14 +171,14 @@ describe('LinkCreate component', () => {
     test('expect a return to the link input when returning from short link', async () => {
       render(<LinkCreate to={url} />)
 
-      const generateLinkButton: HTMLButtonElement = (await screen.findByText(/Generate short link/i, {
+      const generateLinkButton = (await screen.findByText(/Generate short link/i, {
         selector: 'button',
       })) as HTMLButtonElement
       await act(async () => {
         await generateLinkButton.click()
       })
 
-      const newLinkButton: HTMLButtonElement = (await screen.findByText(/Generate different link/i, {
+      const newLinkButton = (await screen.findByText(/Generate different link/i, {
         selector: 'button',
       })) as HTMLButtonElement
       act(() => {

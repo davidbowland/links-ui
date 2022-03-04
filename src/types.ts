@@ -1,3 +1,4 @@
+export { CognitoUserAmplify } from '@aws-amplify/ui'
 export { Operation as PatchOperation } from 'fast-json-patch'
 
 export interface Link {
