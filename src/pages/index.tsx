@@ -15,19 +15,20 @@ const Index = (): JSX.Element => {
   const to = (typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('to')) || undefined
 
   return (
-    <Container maxWidth="md">
-      <main className="main-content">
-        <Helmet>
-          <title>Short Link Generator | dbowland.com</title>
-        </Helmet>
-        <h1 className="main-heading">Short Link Generator</h1>
-        <section>
-          <Authenticated>
-            <LinkCreate to={to}></LinkCreate>
-          </Authenticated>
-        </section>
-      </main>
-    </Container>
+    <>
+      <Helmet>
+        <title>Short Link Generator | dbowland.com</title>
+      </Helmet>
+      <Container maxWidth="md">
+        <Authenticated>
+          <main className="main-content">
+            <section>
+              <LinkCreate to={to}></LinkCreate>
+            </section>
+          </main>
+        </Authenticated>
+      </Container>
+    </>
   )
 }
 
