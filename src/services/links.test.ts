@@ -1,7 +1,7 @@
 import { Auth } from 'aws-amplify'
 import { CognitoUserSession } from 'amazon-cognito-identity-js'
 
-import { createLink, fetchLink } from './links'
+import { createLink, fetchLink, textLink } from './links'
 import { link, linkId } from '@test/__mocks__'
 import { rest, server } from '@test/setup-server'
 
@@ -15,7 +15,7 @@ describe('Link service', () => {
   })
 
   describe('createLink', () => {
-    const postEndpoint = jest.fn().mockReturnValue(200)
+    const postEndpoint = jest.fn().mockReturnValue(link)
 
     beforeAll(() => {
       server.use(
@@ -57,6 +57,28 @@ describe('Link service', () => {
     test('expect results from returned on fetch', async () => {
       const result = await fetchLink(linkId)
       expect(result).toEqual(link)
+    })
+  })
+
+  describe('textLink', () => {
+    const postEndpoint = jest.fn().mockReturnValue({})
+
+    beforeAll(() => {
+      server.use(
+        rest.post(`${baseUrl}/links/:id/send-text`, async (req, res, ctx) => {
+          const { id } = req.params
+          if (id != linkId) {
+            return res(ctx.status(400))
+          }
+          const body = postEndpoint(req.body)
+          return res(body ? ctx.json(body) : ctx.status(400))
+        })
+      )
+    })
+
+    test('expect endpoint called with body', async () => {
+      await textLink(linkId)
+      expect(postEndpoint).toHaveBeenCalledWith({})
     })
   })
 })

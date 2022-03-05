@@ -17,7 +17,7 @@ const Index = (): JSX.Element => {
   return (
     <>
       <Helmet>
-        <title>Short Link Generator | dbowland.com</title>
+        <title>URL Shortener | dbowland.com</title>
       </Helmet>
       <Container maxWidth="md">
         <Authenticated>

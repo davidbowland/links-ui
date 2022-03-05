@@ -37,7 +37,7 @@ describe('Authenticated component', () => {
       )
 
       expect(await screen.findByText(/Testing children/i)).toBeInTheDocument()
-      expect(await screen.findByText(/Short Link Generator/i)).toBeInTheDocument()
+      expect(await screen.findByText(/URL Shortener/i)).toBeInTheDocument()
       expect(await screen.findByText(/Sign In/i)).toBeInTheDocument()
       expect(() => screen.getByText(/Go Back/i)).toThrow()
     })
