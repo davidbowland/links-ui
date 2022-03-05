@@ -124,7 +124,13 @@ const LinkCreate = ({ to }: LinkCreateProps): JSX.Element => {
         </p>
         {textButtonVisible && (
           <p>
-            <Button variant="outlined" fullWidth onClick={sendLinkByText}>
+            <Button
+              variant="outlined"
+              fullWidth
+              onClick={sendLinkByText}
+              data-amplify-analytics-on="click"
+              data-amplify-analytics-name="text-link-click"
+            >
               Text me the link
             </Button>
           </p>
@@ -154,7 +160,14 @@ const LinkCreate = ({ to }: LinkCreateProps): JSX.Element => {
         />
       </label>
       <p>
-        <Button variant="contained" fullWidth disabled={isLoading} onClick={generateShortenedUrl}>
+        <Button
+          variant="contained"
+          fullWidth
+          disabled={isLoading}
+          onClick={generateShortenedUrl}
+          data-amplify-analytics-on="click"
+          data-amplify-analytics-name="generate-link-click"
+        >
           {isLoading ? 'Loading...' : 'Generate shortened URL'}
         </Button>
       </p>
