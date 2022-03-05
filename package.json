@@ -8,7 +8,7 @@
   },
   "license": "ISC",
   "scripts": {
-    "build": "npm run clean && gatsby build",
+    "build": "npm run clean && DEVELOPMENT=true gatsby build",
     "clean": "rm -rf coverage && npm ci && gatsby clean",
     "deploy": "npm run build && ./scripts/deploy.sh",
     "lint": "prettier --write . && eslint --fix . --resolve-plugins-relative-to .",

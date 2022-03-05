@@ -17,10 +17,10 @@ describe('403 error page', () => {
   test('expect rendering Forbidden renders ServerErrorMessage', () => {
     const expectedTitle = '403: Forbidden'
     render(<Forbidden />)
-    expect(mocked(ServerErrorMessage)).toBeCalledWith(
+    expect(mocked(ServerErrorMessage)).toHaveBeenCalledWith(
       expect.objectContaining({ title: expectedTitle }),
       expect.anything()
     )
-    expect(mocked(ServerErrorMessage)).toBeCalledTimes(1)
+    expect(mocked(ServerErrorMessage)).toHaveBeenCalledTimes(1)
   })
 })

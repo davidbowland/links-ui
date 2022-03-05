@@ -27,17 +27,17 @@ describe('Index page', () => {
 
   test('expect rendering Index renders Authenticated', () => {
     render(<Index />)
-    expect(mocked(Authenticated)).toBeCalled()
+    expect(mocked(Authenticated)).toHaveBeenCalled()
   })
 
   test('expect rendering Index renders LinkCreate', () => {
     render(<Index />)
-    expect(mocked(LinkCreate)).toBeCalledWith({ to: undefined }, {})
+    expect(mocked(LinkCreate)).toHaveBeenCalledWith({ to: undefined }, {})
   })
 
   test('expect "to" query string passed to LinkCreate', () => {
     window.location.search = '?to=https%3A%2F%2Fdbowland.com%2F'
     render(<Index />)
-    expect(mocked(LinkCreate)).toBeCalledWith({ to: 'https://dbowland.com/' }, {})
+    expect(mocked(LinkCreate)).toHaveBeenCalledWith({ to: 'https://dbowland.com/' }, {})
   })
 })

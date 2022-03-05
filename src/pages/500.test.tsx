@@ -17,10 +17,10 @@ describe('500 error page', () => {
   test('expect rendering InternalServerError renders ServerErrorMessage', () => {
     const expectedTitle = '500: Internal Server Error'
     render(<InternalServerError />)
-    expect(mocked(ServerErrorMessage)).toBeCalledWith(
+    expect(mocked(ServerErrorMessage)).toHaveBeenCalledWith(
       expect.objectContaining({ title: expectedTitle }),
       expect.anything()
     )
-    expect(mocked(ServerErrorMessage)).toBeCalledTimes(1)
+    expect(mocked(ServerErrorMessage)).toHaveBeenCalledTimes(1)
   })
 })
