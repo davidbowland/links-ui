@@ -1,9 +1,10 @@
+import { Auth } from 'aws-amplify'
 import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import { createLink } from '@services/links'
+import { createLink, textLink } from '@services/links'
 
 export interface LinkCreateProps {
   to?: string
@@ -12,11 +13,13 @@ export interface LinkCreateProps {
 const LinkCreate = ({ to }: LinkCreateProps): JSX.Element => {
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined)
   const [isLoading, setIsLoading] = useState(false)
-  const [shortLink, setShortLink] = useState<string | undefined>(undefined)
+  const [linkId, setLinkId] = useState<string | undefined>(undefined)
+  const [shortenedUrl, setShortenedUrl] = useState<string | undefined>(undefined)
   const [successMessage, setSuccessMessage] = useState<string | undefined>(undefined)
+  const [textButtonVisible, setTextButtonVisible] = useState(false)
   const [url, setUrl] = useState(to ?? '')
 
-  const generateShortLink = async () => {
+  const generateShortenedUrl = async () => {
     try {
       const protocol = new URL(url).protocol
       if (protocol.match(/^https?:$/i) === null) {
@@ -31,34 +34,56 @@ const LinkCreate = ({ to }: LinkCreateProps): JSX.Element => {
     setIsLoading(true)
     try {
       const newLink = await createLink(url)
-      setShortLink(`${window.location.origin}/r/${newLink.linkId}`)
+      setLinkId(newLink.linkId)
+      setShortenedUrl(`${window.location.origin}/r/${newLink.linkId}`)
       setErrorMessage(undefined)
     } catch (error) {
-      console.error('generateShortLink', error)
-      setErrorMessage('Error generating short link, please try again later')
+      console.error('generateShortenedUrl', error)
+      setErrorMessage('Error generating shortened URL, please try again later')
     }
     setIsLoading(false)
   }
 
-  const copyShortLink = () => {
+  const copyShortenedUrl = () => {
     try {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      navigator.clipboard.writeText(shortLink!)
+      navigator.clipboard.writeText(shortenedUrl!)
       setSuccessMessage('Link copied to clipboard')
       setErrorMessage(undefined)
-    } catch (err) {
-      console.error('copyShortLink', err)
+    } catch (error) {
+      console.error('copyShortenedUrl', error)
       setErrorMessage('Could not copy link to clipboard')
+    }
+  }
+
+  const sendLinkByText = async () => {
+    try {
+      setTextButtonVisible(false)
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      await textLink(linkId!)
+      setSuccessMessage('Check your text messages for the link')
+    } catch (error) {
+      console.error('sendLinkByText', error)
+      setTextButtonVisible(true)
+      setErrorMessage('Error texting link, please try again later')
     }
   }
 
   const newLink = () => {
     setErrorMessage(undefined)
     setIsLoading(false)
-    setShortLink(undefined)
+    setLinkId(undefined)
+    setShortenedUrl(undefined)
     setSuccessMessage(undefined)
+    setTextButtonVisible(false)
     setUrl('')
   }
+
+  useEffect(() => {
+    Auth.currentAuthenticatedUser()
+      .then(() => setTextButtonVisible(true))
+      .catch(() => null)
+  }, [])
 
   const generateAlerts = () => {
     if (errorMessage) {
@@ -77,7 +102,7 @@ const LinkCreate = ({ to }: LinkCreateProps): JSX.Element => {
     return null
   }
 
-  if (shortLink) {
+  if (shortenedUrl) {
     return (
       <>
         {generateAlerts()}
@@ -89,14 +114,21 @@ const LinkCreate = ({ to }: LinkCreateProps): JSX.Element => {
             fullWidth
             label="Shortened URL"
             name="shortened-url"
-            value={shortLink}
+            value={shortenedUrl}
           />
         </label>
         <p>
-          <Button variant="contained" fullWidth onClick={copyShortLink}>
-            Copy short link
+          <Button variant="contained" fullWidth onClick={copyShortenedUrl}>
+            Copy shortened URL
           </Button>
         </p>
+        {textButtonVisible && (
+          <p>
+            <Button variant="outlined" fullWidth onClick={sendLinkByText}>
+              Text me the link
+            </Button>
+          </p>
+        )}
         <p>
           <Button variant="outlined" fullWidth onClick={newLink}>
             Generate different link
@@ -122,8 +154,8 @@ const LinkCreate = ({ to }: LinkCreateProps): JSX.Element => {
         />
       </label>
       <p>
-        <Button variant="contained" fullWidth disabled={isLoading} onClick={generateShortLink}>
-          {isLoading ? 'Loading...' : 'Generate short link'}
+        <Button variant="contained" fullWidth disabled={isLoading} onClick={generateShortenedUrl}>
+          {isLoading ? 'Loading...' : 'Generate shortened URL'}
         </Button>
       </p>
     </>

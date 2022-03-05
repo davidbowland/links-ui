@@ -56,7 +56,7 @@ const Authenticated = ({ children }: AuthenticatedProps): JSX.Element => {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          Short Link Generator
+          URL Shortener
         </Typography>
         <Typography component="div">Welcome, {loggedInUser?.attributes?.name}</Typography>
         <Menu
@@ -106,7 +106,7 @@ const Authenticated = ({ children }: AuthenticatedProps): JSX.Element => {
     return (
       <>
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          Short Link Generator
+          URL Shortener
         </Typography>
         <Button onClick={() => setShowLogin(true)} sx={{ color: 'white', display: 'block' }} startIcon={<LoginIcon />}>
           Sign In
