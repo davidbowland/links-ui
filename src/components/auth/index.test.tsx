@@ -39,7 +39,7 @@ describe('Authenticated component', () => {
       expect(await screen.findByText(/Testing children/i)).toBeInTheDocument()
       expect(await screen.findByText(/URL Shortener/i)).toBeInTheDocument()
       expect(await screen.findByText(/Sign In/i)).toBeInTheDocument()
-      expect(() => screen.getByText(/Go Back/i)).toThrow()
+      expect(() => screen.getByText(/Cancel/i)).toThrow()
     })
 
     test('expect clicking sign in shows authenticator', async () => {
@@ -54,7 +54,7 @@ describe('Authenticated component', () => {
       })
 
       expect(mocked(Authenticator)).toHaveBeenCalled()
-      expect(await screen.findByText(/Go Back/i)).toBeInTheDocument()
+      expect(await screen.findByText(/Cancel/i)).toBeInTheDocument()
     })
 
     test('expect logging in sets the user', async () => {
@@ -91,13 +91,13 @@ describe('Authenticated component', () => {
       act(() => {
         signInButton.click()
       })
-      const goBackButton = (await screen.findByText(/Go back/i, { selector: 'button' })) as HTMLButtonElement
+      const goBackButton = (await screen.findByText(/Cancel/i, { selector: 'button' })) as HTMLButtonElement
       act(() => {
         goBackButton.click()
       })
 
       expect(mocked(Authenticator)).toHaveBeenCalled()
-      expect(() => screen.getByText(/Go Back/i)).toThrow()
+      expect(() => screen.getByText(/Cancel/i)).toThrow()
     })
   })
 

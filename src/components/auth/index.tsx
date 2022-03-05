@@ -127,7 +127,7 @@ const Authenticated = ({ children }: AuthenticatedProps): JSX.Element => {
           </Authenticator>
           <p style={{ textAlign: 'center' }}>
             <Button variant="outlined" onClick={() => setShowLogin(false)}>
-              Go back
+              Cancel
             </Button>
           </p>
         </section>
