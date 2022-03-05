@@ -140,6 +140,7 @@ const LinkCreate = ({ to }: LinkCreateProps): JSX.Element => {
             Generate different link
           </Button>
         </p>
+        <p style={{ textAlign: 'center' }}>Links automatically expire after 30 days</p>
       </>
     )
   }
@@ -171,6 +172,7 @@ const LinkCreate = ({ to }: LinkCreateProps): JSX.Element => {
           {isLoading ? 'Loading...' : 'Generate shortened URL'}
         </Button>
       </p>
+      {!textButtonVisible && <p style={{ textAlign: 'center' }}>Sign in to text yourself your shortened URL</p>}
     </>
   )
 }
