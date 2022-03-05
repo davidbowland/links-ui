@@ -5,7 +5,7 @@ import { createLink, fetchLink, textLink } from './links'
 import { link, linkId } from '@test/__mocks__'
 import { rest, server } from '@test/setup-server'
 
-const baseUrl = process.env.JOKE_API_BASE_URL || 'http://localhost'
+const baseUrl = process.env.GATSBY_LINK_API_BASE_URL
 jest.mock('@aws-amplify/analytics')
 
 describe('Link service', () => {
@@ -46,7 +46,7 @@ describe('Link service', () => {
       server.use(
         rest.get(`${baseUrl}/links/:id`, async (req, res, ctx) => {
           const { id } = req.params
-          if (id != linkId) {
+          if (id !== linkId) {
             return res(ctx.status(400))
           }
           return res(ctx.json(link))
@@ -67,7 +67,7 @@ describe('Link service', () => {
       server.use(
         rest.post(`${baseUrl}/links/:id/send-text`, async (req, res, ctx) => {
           const { id } = req.params
-          if (id != linkId) {
+          if (id !== linkId) {
             return res(ctx.status(400))
           }
           const body = postEndpoint(req.body)
