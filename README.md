@@ -1,6 +1,6 @@
 # links-ui
 
-Gatsby and Amplify implementation of links-api and links-infrastructure. Example: <https://links.bowland.link/>
+Gatsby and Amplify implementation of links-api and links-infrastructure. Example: <https://links.dbowland.com/>
 
 ## Static Site
 
