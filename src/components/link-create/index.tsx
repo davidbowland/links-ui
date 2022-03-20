@@ -85,7 +85,7 @@ const LinkCreate = ({ to }: LinkCreateProps): JSX.Element => {
       .catch(() => null)
   }, [])
 
-  const generateAlerts = () => {
+  const generateAlerts = (): JSX.Element | null => {
     if (errorMessage) {
       return (
         <p>
@@ -109,34 +109,34 @@ const LinkCreate = ({ to }: LinkCreateProps): JSX.Element => {
         <label>
           <TextField
             aria-readonly="true"
-            variant="filled"
-            type="text"
             fullWidth
             label="Shortened URL"
             name="shortened-url"
+            type="text"
             value={shortenedUrl}
+            variant="filled"
           />
         </label>
         <p>
-          <Button variant="contained" fullWidth onClick={copyShortenedUrl}>
+          <Button fullWidth onClick={copyShortenedUrl} variant="contained">
             Copy shortened URL
           </Button>
         </p>
         {textButtonVisible && (
           <p>
             <Button
-              variant="outlined"
+              data-amplify-analytics-name="text-link-click"
+              data-amplify-analytics-on="click"
               fullWidth
               onClick={sendLinkByText}
-              data-amplify-analytics-on="click"
-              data-amplify-analytics-name="text-link-click"
+              variant="outlined"
             >
               Text me the link
             </Button>
           </p>
         )}
         <p>
-          <Button variant="outlined" fullWidth onClick={newLink}>
+          <Button fullWidth onClick={newLink} variant="outlined">
             Generate different link
           </Button>
         </p>
@@ -150,24 +150,24 @@ const LinkCreate = ({ to }: LinkCreateProps): JSX.Element => {
       {generateAlerts()}
       <label>
         <TextField
-          variant="filled"
-          type="text"
+          disabled={isLoading}
           fullWidth
           label="Target URL"
-          disabled={isLoading}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => setUrl(event.target.value)}
           name="update-url"
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => setUrl(event.target.value)}
+          type="text"
+          variant="filled"
           value={url}
         />
       </label>
       <p>
         <Button
-          variant="contained"
-          fullWidth
-          disabled={isLoading}
-          onClick={generateShortenedUrl}
-          data-amplify-analytics-on="click"
           data-amplify-analytics-name="generate-link-click"
+          data-amplify-analytics-on="click"
+          disabled={isLoading}
+          fullWidth
+          onClick={generateShortenedUrl}
+          variant="contained"
         >
           {isLoading ? 'Loading...' : 'Generate shortened URL'}
         </Button>
