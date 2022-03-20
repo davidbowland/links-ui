@@ -1,17 +1,17 @@
 import styled from 'styled-components'
 
-export const ErrorContents = styled.p`
-  margin-bottom: 48px;
-`
+export const ErrorContents = styled.p({
+  marginBottom: '48px',
+})
 
-export const ErrorHeader = styled.h1`
-  margin-top: 0;
-  margin-bottom: 64px;
-  max-width: 420px;
-`
+export const ErrorHeader = styled.h1({
+  marginBottom: '64px',
+  marginTop: 0,
+  maxWidth: '420px',
+})
 
-export const ErrorMain = styled.main`
-  color: #232129;
-  padding: 96px;
-  font-family: 'Roboto, sans-serif, serif';
-`
+export const ErrorMain = styled.main({
+  color: '#232129',
+  fontFamily: 'Roboto, sans-serif, serif',
+  padding: '96px',
+})
