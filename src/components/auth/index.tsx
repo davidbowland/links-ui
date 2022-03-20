@@ -44,13 +44,13 @@ const Authenticated = ({ children }: AuthenticatedProps): JSX.Element => {
     return (
       <>
         <IconButton
-          size="large"
-          edge="start"
-          color="inherit"
-          aria-label="menu"
           aria-controls="menu-appbar"
           aria-haspopup="true"
+          aria-label="menu"
+          color="inherit"
+          edge="start"
           onClick={openMenu}
+          size="large"
           sx={{ mr: 2 }}
         >
           <MenuIcon />
@@ -60,19 +60,19 @@ const Authenticated = ({ children }: AuthenticatedProps): JSX.Element => {
         </Typography>
         <Typography component="div">Welcome, {loggedInUser?.attributes?.name}</Typography>
         <Menu
-          id="menu-appbar"
           anchorEl={anchorEl}
           anchorOrigin={{
             vertical: 'top',
             horizontal: 'right',
           }}
+          id="menu-appbar"
           keepMounted
+          onClose={closeMenu}
+          open={Boolean(anchorEl)}
           transformOrigin={{
             vertical: 'top',
             horizontal: 'right',
           }}
-          open={Boolean(anchorEl)}
-          onClose={closeMenu}
         >
           <MenuItem
             onClick={() => {
@@ -105,10 +105,10 @@ const Authenticated = ({ children }: AuthenticatedProps): JSX.Element => {
   const renderLoggedOutBar = (): JSX.Element => {
     return (
       <>
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
+        <Typography sx={{ flexGrow: 1 }} variant="h6">
           URL Shortener
         </Typography>
-        <Button onClick={() => setShowLogin(true)} sx={{ color: 'white', display: 'block' }} startIcon={<LoginIcon />}>
+        <Button onClick={() => setShowLogin(true)} startIcon={<LoginIcon />} sx={{ color: 'white', display: 'block' }}>
           Sign In
         </Button>
       </>
@@ -126,7 +126,7 @@ const Authenticated = ({ children }: AuthenticatedProps): JSX.Element => {
             }}
           </Authenticator>
           <p style={{ textAlign: 'center' }}>
-            <Button variant="outlined" onClick={() => setShowLogin(false)}>
+            <Button onClick={() => setShowLogin(false)} variant="outlined">
               Cancel
             </Button>
           </p>
@@ -153,7 +153,7 @@ const Authenticated = ({ children }: AuthenticatedProps): JSX.Element => {
         <Toolbar>{loggedInUser ? renderLoggedInBar() : renderLoggedOutBar()}</Toolbar>
       </AppBar>
       {showLogin && !loggedInUser ? renderAuthenticator() : children}
-      <Snackbar open={showDeleteErrorSnackbar} autoHideDuration={6000} onClose={snackbarClose}>
+      <Snackbar autoHideDuration={6000} onClose={snackbarClose} open={showDeleteErrorSnackbar}>
         <Alert onClose={snackbarClose} severity="error" sx={{ width: '100%' }}>
           There was a problem deleting your account. Please try again later.
         </Alert>
