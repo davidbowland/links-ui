@@ -1,4 +1,5 @@
 import Alert from '@mui/material/Alert'
+import CircularProgress from '@mui/material/CircularProgress'
 import { Link } from 'gatsby'
 import React, { useEffect, useState } from 'react'
 
@@ -46,7 +47,14 @@ const Redirect = ({ linkId }: RedirectProps): JSX.Element => {
       </Alert>
     )
   }
-  return <Alert severity="info">Redirection in progress</Alert>
+  return (
+    <>
+      <Alert severity="info">Redirection in progress</Alert>
+      <p style={{ textAlign: 'center' }}>
+        <CircularProgress color="inherit" />
+      </p>
+    </>
+  )
 }
 
 export default Redirect

@@ -1,6 +1,8 @@
 import { Auth } from 'aws-amplify'
 import Alert from '@mui/material/Alert'
+import Backdrop from '@mui/material/Backdrop'
 import Button from '@mui/material/Button'
+import CircularProgress from '@mui/material/CircularProgress'
 import TextField from '@mui/material/TextField'
 import React, { useEffect, useState } from 'react'
 
@@ -173,6 +175,9 @@ const LinkCreate = ({ to }: LinkCreateProps): JSX.Element => {
         </Button>
       </p>
       {!textButtonVisible && <p style={{ textAlign: 'center' }}>Sign in to text yourself your shortened URL</p>}
+      <Backdrop open={isLoading} sx={{ color: '#fff', zIndex: (theme: any) => theme.zIndex.drawer + 1 }}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </>
   )
 }
