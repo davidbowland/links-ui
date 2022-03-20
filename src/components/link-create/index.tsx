@@ -20,18 +20,20 @@ const LinkCreate = ({ to }: LinkCreateProps): JSX.Element => {
   const [successMessage, setSuccessMessage] = useState<string | undefined>(undefined)
   const [textButtonVisible, setTextButtonVisible] = useState(false)
   const [url, setUrl] = useState(to ?? '')
+  const [urlError, setUrlError] = useState<string | undefined>(undefined)
 
   const generateShortenedUrl = async () => {
     try {
       const protocol = new URL(url).protocol
       if (protocol.match(/^https?:$/i) === null) {
-        setErrorMessage('URL must be http or https')
+        setUrlError('URL must be http or https')
         return
       }
     } catch (error) {
-      setErrorMessage('Invalid URL')
+      setUrlError('Invalid URL')
       return
     }
+    setUrlError(undefined)
 
     setIsLoading(true)
     try {
@@ -153,7 +155,9 @@ const LinkCreate = ({ to }: LinkCreateProps): JSX.Element => {
       <label>
         <TextField
           disabled={isLoading}
+          error={urlError !== undefined}
           fullWidth
+          helperText={urlError}
           label="Target URL"
           name="update-url"
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => setUrl(event.target.value)}
