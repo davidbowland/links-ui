@@ -37,4 +37,10 @@ describe('404 error page', () => {
     render(<NotFound />)
     expect(mocked(ServerErrorMessage)).toHaveBeenCalledTimes(0)
   })
+
+  test('expect render when pathname has three slashes', () => {
+    window.location.pathname = '/r/aeiou/y'
+    render(<NotFound />)
+    expect(mocked(ServerErrorMessage)).toHaveBeenCalledTimes(1)
+  })
 })
