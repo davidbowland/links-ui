@@ -5,7 +5,7 @@ import '@config/amplify'
 import ServerErrorMessage from '@components/server-error-message'
 
 const NotFound = (): JSX.Element => {
-  const display404 = typeof window !== 'undefined' && !window.location.pathname.startsWith('/r/')
+  const display404 = typeof window !== 'undefined' && window.location.pathname.match(/^\/r\/[^/]+$/) === null
   return (
     <Container className="main-content" maxWidth="md">
       {display404 && (
