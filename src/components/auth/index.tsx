@@ -16,7 +16,6 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import React, { useEffect, useState } from 'react'
 
-import { SignInButton } from './elements'
 import { CognitoUserAmplify } from '@types'
 
 export interface AuthenticatedProps {
@@ -109,9 +108,14 @@ const Authenticated = ({ children }: AuthenticatedProps): JSX.Element => {
         <Typography sx={{ flexGrow: 1 }} variant="h6">
           URL Shortener
         </Typography>
-        <SignInButton onClick={() => setShowLogin(true)} startIcon={<LoginIcon />} variant="outlined">
+        <Button
+          onClick={() => setShowLogin(true)}
+          startIcon={<LoginIcon />}
+          sx={{ borderColor: '#fff', color: '#fff' }}
+          variant="outlined"
+        >
           Sign In
-        </SignInButton>
+        </Button>
       </>
     )
   }
