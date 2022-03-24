@@ -13,7 +13,7 @@ export interface CreateProps {
   to?: string
 }
 
-const Create = ({ setLinkId, to }: CreateProps): JSX.Element | null => {
+const Create = ({ setLinkId, to }: CreateProps): JSX.Element => {
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined)
   const [isLoading, setIsLoading] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)

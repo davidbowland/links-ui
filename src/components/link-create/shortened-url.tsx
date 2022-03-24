@@ -11,7 +11,7 @@ export interface ShortenedUrlProps {
   setLinkId: (value: string | undefined) => void
 }
 
-const ShortenedUrl = ({ linkId, setLinkId }: ShortenedUrlProps): JSX.Element | null => {
+const ShortenedUrl = ({ linkId, setLinkId }: ShortenedUrlProps): JSX.Element => {
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined)
   const [shortenedUrl, setShortenedUrl] = useState<string | undefined>(undefined)
   const [successMessage, setSuccessMessage] = useState<string | undefined>(undefined)
