@@ -77,7 +77,7 @@ describe('LinkCreate component', () => {
       expect(await screen.findByText(/URL must be http or https/i)).toBeInTheDocument()
     })
 
-    test('expect URL is passed to createLink when generate button is clicked and Loading displayed', async () => {
+    test('expect URL is passed to createLink when generate button is clicked', async () => {
       render(<LinkCreate />)
 
       const urlInput = (await screen.findByLabelText(/Target URL/i)) as HTMLInputElement
@@ -93,7 +93,6 @@ describe('LinkCreate component', () => {
       })
 
       expect(mocked(linkService).createLink).toHaveBeenCalledWith(url)
-      expect(await screen.findByText(/Loading\.\.\./i)).toBeInTheDocument()
     })
 
     test('expect error message when createLink rejects', async () => {
@@ -172,6 +171,7 @@ describe('LinkCreate component', () => {
     })
 
     test('expect text option not visible when not logged in', async () => {
+      mocked(Auth).currentAuthenticatedUser.mockRejectedValueOnce(undefined)
       mocked(Auth).currentAuthenticatedUser.mockRejectedValueOnce(undefined)
       render(<LinkCreate to={url} />)
 
