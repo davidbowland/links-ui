@@ -3,7 +3,7 @@ import { Authenticator } from '@aws-amplify/ui-react'
 import { mocked } from 'jest-mock'
 import React from 'react'
 import '@testing-library/jest-dom'
-import { act, screen, render } from '@testing-library/react'
+import { act, screen, render, waitFor } from '@testing-library/react'
 
 import { user } from '@test/__mocks__'
 import Authenticated from './index'
@@ -14,14 +14,26 @@ jest.mock('@aws-amplify/ui-react')
 
 describe('Authenticated component', () => {
   const consoleError = console.error
+  const mockLocationReload = jest.fn()
+  const windowLocationReload = window.location.reload
 
   beforeAll(() => {
+    mocked(Auth).signOut.mockResolvedValue({})
     mocked(Authenticator).mockImplementation(() => <></>)
+
     console.error = jest.fn()
+    Object.defineProperty(window, 'location', {
+      configurable: true,
+      value: { reload: mockLocationReload },
+    })
   })
 
   afterAll(() => {
     console.error = consoleError
+    Object.defineProperty(window, 'location', {
+      configurable: true,
+      value: { replace: windowLocationReload },
+    })
   })
 
   describe('signed out', () => {
@@ -170,6 +182,7 @@ describe('Authenticated component', () => {
       expect(mocked(Auth).signOut).toHaveBeenCalled()
       expect(await screen.findByText(/Sign in/i)).toBeInTheDocument()
       expect(() => screen.getByText(/Welcome, Steve/i)).toThrow()
+      await waitFor(() => expect(mockLocationReload).toHaveBeenCalled())
     })
 
     test('expect selecting delete account invokes delete function', async () => {
@@ -191,6 +204,7 @@ describe('Authenticated component', () => {
       expect(mocked(Auth).signOut).toHaveBeenCalled()
       expect(await screen.findByText(/Sign in/i)).toBeInTheDocument()
       expect(() => screen.getByText(/Welcome, Steve/i)).toThrow()
+      await waitFor(() => expect(mockLocationReload).toHaveBeenCalled())
     })
 
     test('expect delete account error shows snackbar', async () => {
