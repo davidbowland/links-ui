@@ -1,6 +1,8 @@
 export { CognitoUserAmplify } from '@aws-amplify/ui'
 export { Operation as PatchOperation } from 'fast-json-patch'
 
+export type AuthState = 'signIn' | 'signUp' | 'resetPassword'
+
 export interface Link {
   accessCount: number
   expiration?: number
