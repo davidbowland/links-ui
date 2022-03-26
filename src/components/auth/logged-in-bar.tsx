@@ -1,14 +1,14 @@
+import React, { useState } from 'react'
+import Alert from '@mui/material/Alert'
 import { Auth } from 'aws-amplify'
 import DeleteIcon from '@mui/icons-material/Delete'
-import LogoutIcon from '@mui/icons-material/Logout'
-import MenuIcon from '@mui/icons-material/Menu'
 import IconButton from '@mui/material/IconButton'
-import Alert from '@mui/material/Alert'
+import LogoutIcon from '@mui/icons-material/Logout'
 import Menu from '@mui/material/Menu'
+import MenuIcon from '@mui/icons-material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Snackbar from '@mui/material/Snackbar'
 import Typography from '@mui/material/Typography'
-import React, { useState } from 'react'
 
 import { CognitoUserAmplify } from '@types'
 
@@ -47,23 +47,23 @@ const LoggedInBar = ({ loggedInUser, setLoggedInUser }: LoggedInBarProps): JSX.E
       >
         <MenuIcon />
       </IconButton>
-      <Typography variant="h6" sx={{ flexGrow: 1 }}>
+      <Typography sx={{ flexGrow: 1 }} variant="h6">
         URL Shortener
       </Typography>
       <Typography component="div">Welcome, {loggedInUser?.attributes?.name}</Typography>
       <Menu
         anchorEl={anchorEl}
         anchorOrigin={{
-          vertical: 'top',
           horizontal: 'right',
+          vertical: 'top',
         }}
         id="menu-appbar"
         keepMounted
         onClose={closeMenu}
         open={Boolean(anchorEl)}
         transformOrigin={{
-          vertical: 'top',
           horizontal: 'right',
+          vertical: 'top',
         }}
       >
         <MenuItem

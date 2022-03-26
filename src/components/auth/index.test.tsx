@@ -1,12 +1,12 @@
+import '@testing-library/jest-dom'
+import { act, render, screen, waitFor } from '@testing-library/react'
 import { Auth } from 'aws-amplify'
 import { Authenticator } from '@aws-amplify/ui-react'
-import { mocked } from 'jest-mock'
 import React from 'react'
-import '@testing-library/jest-dom'
-import { act, screen, render, waitFor } from '@testing-library/react'
+import { mocked } from 'jest-mock'
 
-import { user } from '@test/__mocks__'
 import Authenticated from './index'
+import { user } from '@test/__mocks__'
 
 jest.mock('aws-amplify')
 jest.mock('@aws-amplify/analytics')
@@ -72,7 +72,7 @@ describe('Authenticated component', () => {
     test('expect logging in sets the user', async () => {
       const logInCallback = jest.fn()
       mocked(Authenticator).mockImplementationOnce(({ children }) => {
-        logInCallback.mockImplementation(() => children && children({ user, signOut: jest.fn() }))
+        logInCallback.mockImplementation(() => children && children({ signOut: jest.fn(), user }))
         return <></>
       })
 

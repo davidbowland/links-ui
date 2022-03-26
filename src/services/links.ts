@@ -1,6 +1,7 @@
 import { API } from 'aws-amplify'
-import { apiName, apiNameUnauthenticated } from '@config/amplify'
+
 import { Link, StringObject } from '@types'
+import { apiName, apiNameUnauthenticated } from '@config/amplify'
 
 export const createLink = (url: string): Promise<StringObject> =>
   API.post(apiNameUnauthenticated, '/links', { body: { url } })

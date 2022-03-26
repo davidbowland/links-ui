@@ -1,12 +1,12 @@
-import { Auth } from 'aws-amplify'
-import { mocked } from 'jest-mock'
-import React from 'react'
 import '@testing-library/jest-dom'
 import { act, fireEvent, render, screen } from '@testing-library/react'
+import { Auth } from 'aws-amplify'
+import React from 'react'
+import { mocked } from 'jest-mock'
 
-import LinkCreate from './index'
 import * as linkService from '@services/links'
 import { linkId, user } from '@test/__mocks__'
+import LinkCreate from './index'
 
 jest.mock('aws-amplify')
 jest.mock('@aws-amplify/analytics')

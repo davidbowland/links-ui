@@ -1,9 +1,9 @@
+import React, { useEffect, useState } from 'react'
 import { Auth } from 'aws-amplify'
 import Backdrop from '@mui/material/Backdrop'
 import Button from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress'
 import TextField from '@mui/material/TextField'
-import React, { useEffect, useState } from 'react'
 
 import Alerts from './alerts'
 import { createLink } from '@services/links'
@@ -65,8 +65,8 @@ const Create = ({ setLinkId, to }: CreateProps): JSX.Element => {
           name="update-url"
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => setUrl(event.target.value)}
           type="text"
-          variant="filled"
           value={url}
+          variant="filled"
         />
       </label>
       <p>

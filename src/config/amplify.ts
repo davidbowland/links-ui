@@ -12,27 +12,27 @@ export const apiName = 'LinksAPIGateway'
 export const apiNameUnauthenticated = 'LinksAPIGatewayUnauthenticated'
 
 Amplify.configure({
-  Auth: {
-    identityPoolId,
-    region: userPoolId.split('_')[0],
-    userPoolId,
-    userPoolWebClientId: appClientId,
-    mandatorySignIn: false,
-  },
   API: {
     endpoints: [
       {
-        name: apiName,
-        endpoint: baseUrl,
         custom_header: async () => ({
           Authorization: `Bearer ${(await Auth.currentSession()).getIdToken().getJwtToken()}`,
         }),
+        endpoint: baseUrl,
+        name: apiName,
       },
       {
-        name: apiNameUnauthenticated,
         endpoint: baseUrl,
+        name: apiNameUnauthenticated,
       },
     ],
+  },
+  Auth: {
+    identityPoolId,
+    mandatorySignIn: false,
+    region: userPoolId.split('_')[0],
+    userPoolId,
+    userPoolWebClientId: appClientId,
   },
 })
 
@@ -43,8 +43,8 @@ const appId = process.env.GATSBY_PINPOINT_ID
 const analyticsConfig = {
   AWSPinpoint: {
     appId,
-    region: 'us-east-1',
     mandatorySignIn: false,
+    region: 'us-east-1',
   },
 }
 

@@ -1,13 +1,13 @@
 import Container from '@mui/material/Container'
-import React from 'react'
 import { Helmet } from 'react-helmet'
-
-import Redirect, { RedirectProps } from '@components/redirect'
+import React from 'react'
 
 import '@config/amplify'
+import Redirect, { RedirectProps } from '@components/redirect'
+
+import '@assets/css/index.css'
 import '@fontsource/rokkitt'
 import 'normalize.css'
-import '@assets/css/index.css'
 
 export interface RedirectPageProps {
   params: RedirectProps

@@ -1,7 +1,7 @@
+import React, { useEffect, useState } from 'react'
 import Alert from '@mui/material/Alert'
 import CircularProgress from '@mui/material/CircularProgress'
 import { Link } from 'gatsby'
-import React, { useEffect, useState } from 'react'
 
 import { fetchLink } from '@services/links'
 
