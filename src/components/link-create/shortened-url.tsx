@@ -53,6 +53,14 @@ const ShortenedUrl = ({ linkId, setLinkId }: ShortenedUrlProps): JSX.Element => 
     }
   }
 
+  const snackbarErrorClose = (): void => {
+    setErrorMessage(undefined)
+  }
+
+  const snackbarSuccessClose = (): void => {
+    setSuccessMessage(undefined)
+  }
+
   useEffect(() => {
     setShortenedUrl(`${window.location.origin}/r/${linkId}`)
   }, [linkId])
@@ -96,15 +104,15 @@ const ShortenedUrl = ({ linkId, setLinkId }: ShortenedUrlProps): JSX.Element => 
         </Button>
         <Typography sx={{ textAlign: 'center' }}>Links automatically expire after 30 days</Typography>
       </Stack>
-      <Snackbar autoHideDuration={15_000} onClose={() => setErrorMessage(undefined)} open={errorMessage !== undefined}>
-        <Alert severity="error">{errorMessage}</Alert>
+      <Snackbar autoHideDuration={15_000} onClose={snackbarErrorClose} open={errorMessage !== undefined}>
+        <Alert onClose={snackbarErrorClose} severity="error">
+          {errorMessage}
+        </Alert>
       </Snackbar>
-      <Snackbar
-        autoHideDuration={5_000}
-        onClose={() => setSuccessMessage(undefined)}
-        open={successMessage !== undefined}
-      >
-        <Alert severity="success">{successMessage}</Alert>
+      <Snackbar autoHideDuration={5_000} onClose={snackbarSuccessClose} open={successMessage !== undefined}>
+        <Alert onClose={snackbarSuccessClose} severity="success">
+          {successMessage}
+        </Alert>
       </Snackbar>
     </>
   )

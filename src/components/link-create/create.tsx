@@ -21,7 +21,7 @@ const Create = ({ setLinkId, to }: CreateProps): JSX.Element => {
   const [url, setUrl] = useState(to ?? '')
   const [urlError, setUrlError] = useState<string | undefined>(undefined)
 
-  const generateShortenedUrl = async () => {
+  const generateShortenedUrl = async (): Promise<void> => {
     try {
       const protocol = new URL(url).protocol
       if (protocol.match(/^https?:$/i) === null) {
@@ -45,6 +45,10 @@ const Create = ({ setLinkId, to }: CreateProps): JSX.Element => {
       setErrorMessage('Error generating shortened URL, please try again later')
     }
     setIsLoading(false)
+  }
+
+  const snackbarErrorClose = (): void => {
+    setErrorMessage(undefined)
   }
 
   useEffect(() => {
@@ -83,8 +87,10 @@ const Create = ({ setLinkId, to }: CreateProps): JSX.Element => {
         </Button>
         {!isLoggedIn && <p style={{ textAlign: 'center' }}>Sign in to text yourself your shortened URL</p>}
       </Stack>
-      <Snackbar autoHideDuration={15_000} onClose={() => setErrorMessage(undefined)} open={errorMessage !== undefined}>
-        <Alert severity="error">{errorMessage}</Alert>
+      <Snackbar autoHideDuration={15_000} onClose={snackbarErrorClose} open={errorMessage !== undefined}>
+        <Alert onClose={snackbarErrorClose} severity="error">
+          {errorMessage}
+        </Alert>
       </Snackbar>
     </>
   )

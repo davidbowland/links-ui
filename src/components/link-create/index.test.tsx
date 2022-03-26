@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom'
-import { act, fireEvent, render, screen } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { Auth } from 'aws-amplify'
 import React from 'react'
 import { mocked } from 'jest-mock'
@@ -108,6 +108,24 @@ describe('LinkCreate component', () => {
 
       expect(await screen.findByText(/Error generating shortened URL, please try again later/i)).toBeInTheDocument()
     })
+
+    test('expect closing error message removes it', async () => {
+      mocked(linkService).createLink.mockRejectedValueOnce(undefined)
+      render(<LinkCreate to={url} />)
+
+      const generateLinkButton = (await screen.findByText(/Generate shortened URL/i, {
+        selector: 'button',
+      })) as HTMLButtonElement
+      await act(async () => {
+        await generateLinkButton.click()
+      })
+      const closeSnackbarButton = (await screen.findByLabelText(/Close/i, { selector: 'button' })) as HTMLButtonElement
+      act(() => {
+        closeSnackbarButton.click()
+      })
+
+      expect(() => screen.findByText(/Error generating shortened URL, please try again later/i)).rejects.toBeDefined()
+    })
   })
 
   describe('shortened URL', () => {
@@ -122,7 +140,9 @@ describe('LinkCreate component', () => {
       })
 
       const urlInput: HTMLInputElement = (await screen.findByLabelText(/Shortened URL/i)) as HTMLInputElement
-      expect(urlInput.value).toEqual('https://bowland.link/r/aeio')
+      await waitFor(() => {
+        expect(urlInput.value).toEqual('https://bowland.link/r/aeio')
+      })
     })
 
     test('expect copy invokes writeText and displays message', async () => {
@@ -144,6 +164,30 @@ describe('LinkCreate component', () => {
 
       expect(mockCopyToClipboard).toHaveBeenCalled()
       expect(await screen.findByText(/Link copied to clipboard/i)).toBeInTheDocument()
+    })
+
+    test('expect closing success message removes it', async () => {
+      render(<LinkCreate to={url} />)
+
+      const generateLinkButton = (await screen.findByText(/Generate shortened URL/i, {
+        selector: 'button',
+      })) as HTMLButtonElement
+      await act(async () => {
+        await generateLinkButton.click()
+      })
+
+      const copyLinkButton = (await screen.findByText(/Copy shortened URL/i, {
+        selector: 'button',
+      })) as HTMLButtonElement
+      act(() => {
+        copyLinkButton.click()
+      })
+      const closeSnackbarButton = (await screen.findByLabelText(/Close/i, { selector: 'button' })) as HTMLButtonElement
+      act(() => {
+        closeSnackbarButton.click()
+      })
+
+      await expect(() => screen.findByText(/Link copied to clipboard/i)).rejects.toBeDefined()
     })
 
     test('expect copy throw displays error', async () => {
@@ -168,6 +212,33 @@ describe('LinkCreate component', () => {
 
       expect(mockCopyToClipboard).toHaveBeenCalled()
       expect(await screen.findByText(/Could not copy link to clipboard/i)).toBeInTheDocument()
+    })
+
+    test('expect copy throw displays error', async () => {
+      mockCopyToClipboard.mockImplementationOnce(() => {
+        throw new Error('A wild error appeared')
+      })
+      render(<LinkCreate to={url} />)
+
+      const generateLinkButton = (await screen.findByText(/Generate shortened URL/i, {
+        selector: 'button',
+      })) as HTMLButtonElement
+      await act(async () => {
+        await generateLinkButton.click()
+      })
+
+      const copyLinkButton = (await screen.findByText(/Copy shortened URL/i, {
+        selector: 'button',
+      })) as HTMLButtonElement
+      act(() => {
+        copyLinkButton.click()
+      })
+      const closeSnackbarButton = (await screen.findByLabelText(/Close/i, { selector: 'button' })) as HTMLButtonElement
+      act(() => {
+        closeSnackbarButton.click()
+      })
+
+      await expect(() => screen.findByText(/Could not copy link to clipboard/i)).rejects.toBeDefined()
     })
 
     test('expect text option not visible when not logged in', async () => {
