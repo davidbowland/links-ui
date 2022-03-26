@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
+import Alert from '@mui/material/Alert'
 import { Auth } from 'aws-amplify'
-import Backdrop from '@mui/material/Backdrop'
 import Button from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress'
+import Snackbar from '@mui/material/Snackbar'
+import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
 
-import Alerts from './alerts'
 import { createLink } from '@services/links'
 
 export interface CreateProps {
@@ -54,37 +55,37 @@ const Create = ({ setLinkId, to }: CreateProps): JSX.Element => {
 
   return (
     <>
-      <Alerts errorMessage={errorMessage} />
-      <label>
-        <TextField
-          disabled={isLoading}
-          error={urlError !== undefined}
-          fullWidth
-          helperText={urlError}
-          label="Target URL"
-          name="update-url"
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => setUrl(event.target.value)}
-          type="text"
-          value={url}
-          variant="filled"
-        />
-      </label>
-      <p>
+      <Stack spacing={2}>
+        <label>
+          <TextField
+            disabled={isLoading}
+            error={urlError !== undefined}
+            fullWidth
+            helperText={urlError}
+            label="Target URL"
+            name="update-url"
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setUrl(event.target.value)}
+            type="text"
+            value={url}
+            variant="filled"
+          />
+        </label>
         <Button
           data-amplify-analytics-name="generate-link-click"
           data-amplify-analytics-on="click"
           disabled={isLoading}
           fullWidth
           onClick={generateShortenedUrl}
+          startIcon={isLoading ? <CircularProgress color="inherit" size={14} /> : null}
           variant="contained"
         >
           {isLoading ? 'Loading...' : 'Generate shortened URL'}
         </Button>
-      </p>
-      {!isLoggedIn && <p style={{ textAlign: 'center' }}>Sign in to text yourself your shortened URL</p>}
-      <Backdrop open={isLoading} sx={{ color: '#fff', zIndex: (theme: any) => theme.zIndex.drawer + 1 }}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
+        {!isLoggedIn && <p style={{ textAlign: 'center' }}>Sign in to text yourself your shortened URL</p>}
+      </Stack>
+      <Snackbar autoHideDuration={15_000} onClose={() => setErrorMessage(undefined)} open={errorMessage !== undefined}>
+        <Alert severity="error">{errorMessage}</Alert>
+      </Snackbar>
     </>
   )
 }

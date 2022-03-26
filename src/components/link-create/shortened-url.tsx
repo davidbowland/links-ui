@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
+import Alert from '@mui/material/Alert'
 import { Auth } from 'aws-amplify'
 import Button from '@mui/material/Button'
+import Snackbar from '@mui/material/Snackbar'
+import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
 
-import Alerts from './alerts'
 import { textLink } from '@services/links'
 
 export interface ShortenedUrlProps {
@@ -62,25 +65,22 @@ const ShortenedUrl = ({ linkId, setLinkId }: ShortenedUrlProps): JSX.Element => 
 
   return (
     <>
-      <Alerts errorMessage={errorMessage} successMessage={successMessage} />
-      <label>
-        <TextField
-          aria-readonly="true"
-          fullWidth
-          label="Shortened URL"
-          name="shortened-url"
-          type="text"
-          value={shortenedUrl}
-          variant="filled"
-        />
-      </label>
-      <p>
+      <Stack spacing={2}>
+        <label>
+          <TextField
+            aria-readonly="true"
+            fullWidth
+            label="Shortened URL"
+            name="shortened-url"
+            type="text"
+            value={shortenedUrl}
+            variant="filled"
+          />
+        </label>
         <Button fullWidth onClick={copyShortenedUrl} variant="contained">
           Copy shortened URL
         </Button>
-      </p>
-      {textButtonVisible && (
-        <p>
+        {textButtonVisible && (
           <Button
             data-amplify-analytics-name="text-link-click"
             data-amplify-analytics-on="click"
@@ -90,14 +90,22 @@ const ShortenedUrl = ({ linkId, setLinkId }: ShortenedUrlProps): JSX.Element => 
           >
             Text me the link
           </Button>
-        </p>
-      )}
-      <p>
+        )}
         <Button fullWidth onClick={newLink} variant="outlined">
           Generate different link
         </Button>
-      </p>
-      <p style={{ textAlign: 'center' }}>Links automatically expire after 30 days</p>
+        <Typography sx={{ textAlign: 'center' }}>Links automatically expire after 30 days</Typography>
+      </Stack>
+      <Snackbar autoHideDuration={15_000} onClose={() => setErrorMessage(undefined)} open={errorMessage !== undefined}>
+        <Alert severity="error">{errorMessage}</Alert>
+      </Snackbar>
+      <Snackbar
+        autoHideDuration={5_000}
+        onClose={() => setSuccessMessage(undefined)}
+        open={successMessage !== undefined}
+      >
+        <Alert severity="success">{successMessage}</Alert>
+      </Snackbar>
     </>
   )
 }
