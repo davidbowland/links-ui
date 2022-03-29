@@ -1,10 +1,10 @@
-import Container from '@mui/material/Container'
 import { Helmet } from 'react-helmet'
+import Paper from '@mui/material/Paper'
 import React from 'react'
 
-import '@config/amplify'
 import Authenticated from '@components/auth'
 import LinkCreate from '@components/link-create'
+import Themed from '@components/themed'
 
 import '@assets/css/index.css'
 import '@fontsource/rokkitt'
@@ -15,11 +15,11 @@ const Index = (): JSX.Element => {
   const to = (typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('to')) || undefined
 
   return (
-    <>
+    <Themed>
       <Helmet>
         <title>URL Shortener | dbowland.com</title>
       </Helmet>
-      <Container maxWidth="md">
+      <Paper elevation={3} sx={{ margin: 'auto', maxWidth: '900px' }}>
         <Authenticated>
           <main className="main-content">
             <section>
@@ -27,8 +27,8 @@ const Index = (): JSX.Element => {
             </section>
           </main>
         </Authenticated>
-      </Container>
-    </>
+      </Paper>
+    </Themed>
   )
 }
 
