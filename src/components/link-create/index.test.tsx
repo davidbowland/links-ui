@@ -25,7 +25,7 @@ describe('LinkCreate component', () => {
     })
     Object.defineProperty(window, 'location', {
       configurable: true,
-      value: { origin: 'https://bowland.link' },
+      value: { origin: 'https://dbowland.com' },
     })
 
     mocked(Auth).currentAuthenticatedUser.mockResolvedValue(user)
@@ -141,7 +141,7 @@ describe('LinkCreate component', () => {
 
       const urlInput: HTMLInputElement = (await screen.findByLabelText(/Shortened URL/i)) as HTMLInputElement
       await waitFor(() => {
-        expect(urlInput.value).toEqual('https://bowland.link/r/aeio')
+        expect(urlInput.value).toEqual('https://dbowland.com/r/aeio')
       })
     })
 
