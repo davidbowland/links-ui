@@ -16,14 +16,13 @@ export interface ShortenedUrlProps {
 
 const ShortenedUrl = ({ linkId, setLinkId }: ShortenedUrlProps): JSX.Element => {
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined)
-  const [shortenedUrl, setShortenedUrl] = useState<string | undefined>(undefined)
+  const [shortenedUrl, setShortenedUrl] = useState<string>('')
   const [successMessage, setSuccessMessage] = useState<string | undefined>(undefined)
   const [textButtonVisible, setTextButtonVisible] = useState(false)
 
   const copyShortenedUrl = () => {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      navigator.clipboard.writeText(shortenedUrl!)
+      navigator.clipboard.writeText(shortenedUrl)
       setSuccessMessage('Link copied to clipboard')
       setErrorMessage(undefined)
     } catch (error) {
@@ -35,7 +34,7 @@ const ShortenedUrl = ({ linkId, setLinkId }: ShortenedUrlProps): JSX.Element => 
   const newLink = () => {
     setErrorMessage(undefined)
     setLinkId(undefined)
-    setShortenedUrl(undefined)
+    setShortenedUrl('')
     setSuccessMessage(undefined)
     setTextButtonVisible(false)
   }
@@ -43,8 +42,7 @@ const ShortenedUrl = ({ linkId, setLinkId }: ShortenedUrlProps): JSX.Element => 
   const sendLinkByText = async () => {
     try {
       setTextButtonVisible(false)
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      await textLink(linkId!)
+      await textLink(linkId)
       setSuccessMessage('Check your text messages for the link')
     } catch (error) {
       console.error('sendLinkByText', error)
