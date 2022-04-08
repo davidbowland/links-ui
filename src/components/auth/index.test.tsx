@@ -51,7 +51,7 @@ describe('Authenticated component', () => {
       expect(await screen.findByText(/Testing children/i)).toBeInTheDocument()
       expect(await screen.findByText(/URL Shortener/i)).toBeInTheDocument()
       expect(await screen.findByText(/Sign In/i)).toBeInTheDocument()
-      expect(() => screen.getByText(/Cancel/i)).toThrow()
+      expect(screen.queryByText(/Cancel/i)).not.toBeInTheDocument()
     })
 
     test('expect clicking sign in shows authenticator', async () => {
@@ -109,7 +109,7 @@ describe('Authenticated component', () => {
       })
 
       expect(mocked(Authenticator)).toHaveBeenCalled()
-      expect(() => screen.getByText(/Cancel/i)).toThrow()
+      expect(screen.queryByText(/Cancel/i)).not.toBeInTheDocument()
     })
   })
 
@@ -181,7 +181,7 @@ describe('Authenticated component', () => {
       expect(user.deleteUser).not.toHaveBeenCalled()
       expect(mocked(Auth).signOut).toHaveBeenCalled()
       expect(await screen.findByText(/Sign in/i)).toBeInTheDocument()
-      expect(() => screen.getByText(/Welcome, Steve/i)).toThrow()
+      expect(screen.queryByText(/Welcome, Steve/i)).not.toBeInTheDocument()
       await waitFor(() => expect(mockLocationReload).toHaveBeenCalled())
     })
 
@@ -203,7 +203,7 @@ describe('Authenticated component', () => {
       expect(user.deleteUser).toHaveBeenCalled()
       expect(mocked(Auth).signOut).toHaveBeenCalled()
       expect(await screen.findByText(/Sign in/i)).toBeInTheDocument()
-      expect(() => screen.getByText(/Welcome, Steve/i)).toThrow()
+      expect(screen.queryByText(/Welcome, Steve/i)).not.toBeInTheDocument()
       await waitFor(() => expect(mockLocationReload).toHaveBeenCalled())
     })
 

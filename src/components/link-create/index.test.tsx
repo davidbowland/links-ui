@@ -124,7 +124,7 @@ describe('LinkCreate component', () => {
         closeSnackbarButton.click()
       })
 
-      expect(() => screen.findByText(/Error generating shortened URL, please try again later/i)).rejects.toBeDefined()
+      expect(screen.queryByText(/Error generating shortened URL, please try again later/i)).not.toBeInTheDocument()
     })
   })
 
@@ -187,7 +187,7 @@ describe('LinkCreate component', () => {
         closeSnackbarButton.click()
       })
 
-      await expect(() => screen.findByText(/Link copied to clipboard/i)).rejects.toBeDefined()
+      expect(screen.queryByText(/Link copied to clipboard/i)).not.toBeInTheDocument()
     })
 
     test('expect copy throw displays error', async () => {
@@ -214,7 +214,7 @@ describe('LinkCreate component', () => {
       expect(await screen.findByText(/Could not copy link to clipboard/i)).toBeInTheDocument()
     })
 
-    test('expect copy throw displays error', async () => {
+    test('expect closing error message removes it', async () => {
       mockCopyToClipboard.mockImplementationOnce(() => {
         throw new Error('A wild error appeared')
       })
@@ -238,7 +238,7 @@ describe('LinkCreate component', () => {
         closeSnackbarButton.click()
       })
 
-      await expect(() => screen.findByText(/Could not copy link to clipboard/i)).rejects.toBeDefined()
+      expect(screen.queryByText(/Could not copy link to clipboard/i)).not.toBeInTheDocument()
     })
 
     test('expect text option not visible when not logged in', async () => {
@@ -253,7 +253,7 @@ describe('LinkCreate component', () => {
         await generateLinkButton.click()
       })
 
-      expect(() => screen.getByText(/Check your text messages for the link/i)).toThrow()
+      expect(screen.queryByText(/Check your text messages for the link/i)).not.toBeInTheDocument()
     })
 
     test('expect text invokes textLink and displays message', async () => {
