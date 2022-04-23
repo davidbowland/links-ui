@@ -6,10 +6,6 @@ import '@config/amplify'
 import Redirect, { RedirectProps } from '@components/redirect'
 import Themed from '@components/themed'
 
-import '@assets/css/index.css'
-import '@fontsource/rokkitt'
-import 'normalize.css'
-
 export interface RedirectPageProps {
   params: RedirectProps
 }

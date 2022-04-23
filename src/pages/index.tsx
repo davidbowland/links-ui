@@ -6,10 +6,6 @@ import Authenticated from '@components/auth'
 import LinkCreate from '@components/link-create'
 import Themed from '@components/themed'
 
-import '@assets/css/index.css'
-import '@fontsource/rokkitt'
-import 'normalize.css'
-
 const Index = (): JSX.Element => {
   // This funky next line gets us to 100% test coverage (no difficult-to-test ternary where window needs to be undefined)
   const to = (typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('to')) || undefined
