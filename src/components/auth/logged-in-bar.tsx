@@ -7,6 +7,7 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
 import DeleteIcon from '@mui/icons-material/Delete'
 import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
+import { Link } from 'gatsby'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
@@ -42,7 +43,9 @@ const LoggedInBar = ({ loggedInUser, setLoggedInUser }: LoggedInBarProps): JSX.E
   return (
     <>
       <Typography sx={{ flexGrow: 1 }} variant="h6">
-        URL Shortener
+        <Link style={{ color: '#fff', textDecoration: 'none' }} to="/">
+          URL Shortener
+        </Link>
       </Typography>
       <Typography component="div">Welcome, {loggedInUser?.attributes?.name}</Typography>
       <IconButton

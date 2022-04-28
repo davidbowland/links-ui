@@ -1,4 +1,5 @@
 import Button from '@mui/material/Button'
+import { Link } from 'gatsby'
 import LoginIcon from '@mui/icons-material/Login'
 import React from 'react'
 import Typography from '@mui/material/Typography'
@@ -19,7 +20,9 @@ const LoggedOutBar = ({ setAuthState, setShowLogin }: LoggedOutBarProps): JSX.El
   return (
     <>
       <Typography sx={{ flexGrow: 1 }} variant="h6">
-        URL Shortener
+        <Link style={{ color: '#fff', textDecoration: 'none' }} to="/">
+          URL Shortener
+        </Link>
       </Typography>
       <Button
         onClick={signInClick}
