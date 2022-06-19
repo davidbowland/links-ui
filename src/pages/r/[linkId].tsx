@@ -9,14 +9,14 @@ export interface RedirectPageProps {
 
 const RedirectPage = ({ params }: RedirectPageProps): JSX.Element => {
   return (
-    <>
+    <main>
       <Helmet>
         <title>Links Redirect | dbowland.com</title>
       </Helmet>
-      <main className="main-content">
+      <section style={{ padding: '50px' }}>
         <Redirect linkId={params.linkId} />
-      </main>
-    </>
+      </section>
+    </main>
   )
 }
 

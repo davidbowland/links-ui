@@ -8,16 +8,14 @@ const Index = (): JSX.Element => {
   const to = (typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('to')) || undefined
 
   return (
-    <>
+    <main>
       <Helmet>
         <title>URL Shortener | dbowland.com</title>
       </Helmet>
-      <main className="main-content">
-        <section>
-          <LinkCreate to={to}></LinkCreate>
-        </section>
-      </main>
-    </>
+      <section style={{ padding: '50px' }}>
+        <LinkCreate to={to}></LinkCreate>
+      </section>
+    </main>
   )
 }
 
