@@ -48,7 +48,7 @@ module.exports = {
     },
   ],
   siteMetadata: {
-    siteUrl: 'https://links.bowland.link',
+    siteUrl: 'https://links.dbowland.com',
     title: 'links-ui',
   },
 }
