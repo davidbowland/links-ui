@@ -20,7 +20,7 @@ describe('Link service', () => {
     beforeAll(() => {
       server.use(
         rest.post(`${baseUrl}/links`, async (req, res, ctx) => {
-          const body = postEndpoint(req.body)
+          const body = postEndpoint(await req.json())
           return res(body ? ctx.json(body) : ctx.status(400))
         })
       )
@@ -70,7 +70,7 @@ describe('Link service', () => {
           if (id !== linkId) {
             return res(ctx.status(400))
           }
-          const body = postEndpoint(req.body)
+          const body = postEndpoint(await req.json())
           return res(body ? ctx.json(body) : ctx.status(400))
         })
       )
