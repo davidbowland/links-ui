@@ -35,21 +35,23 @@ const Redirect = ({ linkId }: RedirectProps): JSX.Element => {
 
   if (error) {
     return (
-      <Alert severity="error">
+      <Alert severity="error" variant="filled">
         {error} Return to <Link to={window.location.origin}>{window.location.origin}</Link>
       </Alert>
     )
   }
   if (url) {
     return (
-      <Alert severity="success">
+      <Alert severity="success" variant="filled">
         Redirecting you to <Link to={url}>{url}</Link>
       </Alert>
     )
   }
   return (
     <>
-      <Alert severity="info">Redirection in progress</Alert>
+      <Alert severity="info" variant="filled">
+        Redirection in progress
+      </Alert>
       <p style={{ textAlign: 'center' }}>
         <CircularProgress color="inherit" />
       </p>

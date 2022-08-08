@@ -88,7 +88,7 @@ const Create = ({ setLinkId, to }: CreateProps): JSX.Element => {
         {!isLoggedIn && <p style={{ textAlign: 'center' }}>Sign in to text yourself your shortened URL</p>}
       </Stack>
       <Snackbar autoHideDuration={15_000} onClose={snackbarErrorClose} open={errorMessage !== undefined}>
-        <Alert onClose={snackbarErrorClose} severity="error">
+        <Alert onClose={snackbarErrorClose} severity="error" variant="filled">
           {errorMessage}
         </Alert>
       </Snackbar>
