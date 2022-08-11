@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import Alert from '@mui/material/Alert'
-import CircularProgress from '@mui/material/CircularProgress'
+import Box from '@mui/material/Box'
+import LinearProgress from '@mui/material/LinearProgress'
 import { Link } from 'gatsby'
+import Stack from '@mui/material/Stack'
 
 import { fetchLink } from '@services/links'
 
@@ -42,20 +44,25 @@ const Redirect = ({ linkId }: RedirectProps): JSX.Element => {
   }
   if (url) {
     return (
-      <Alert severity="success" variant="filled">
-        Redirecting you to <Link to={url}>{url}</Link>
-      </Alert>
+      <Stack spacing={4}>
+        <Alert severity="success" variant="filled">
+          Redirecting you to <Link to={url}>{url}</Link>
+        </Alert>
+        <Box sx={{ width: '100%' }}>
+          <LinearProgress color="success" />
+        </Box>
+      </Stack>
     )
   }
   return (
-    <>
+    <Stack spacing={4}>
       <Alert severity="info" variant="filled">
         Redirection in progress
       </Alert>
-      <p style={{ textAlign: 'center' }}>
-        <CircularProgress color="inherit" />
-      </p>
-    </>
+      <Box sx={{ width: '100%' }}>
+        <LinearProgress color="info" />
+      </Box>
+    </Stack>
   )
 }
 
