@@ -47,7 +47,7 @@ const LoggedInBar = ({ loggedInUser, setLoggedInUser }: LoggedInBarProps): JSX.E
           URL Shortener
         </Link>
       </Typography>
-      <Typography component="div">Welcome, {loggedInUser?.attributes?.name}</Typography>
+      <Typography component="div">{loggedInUser?.attributes?.name}</Typography>
       <IconButton
         aria-controls="menu-appbar"
         aria-haspopup="true"
