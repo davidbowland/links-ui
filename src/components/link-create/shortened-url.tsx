@@ -20,7 +20,7 @@ const ShortenedUrl = ({ linkId, setLinkId }: ShortenedUrlProps): JSX.Element => 
   const [successMessage, setSuccessMessage] = useState<string | undefined>(undefined)
   const [textButtonVisible, setTextButtonVisible] = useState(false)
 
-  const copyShortenedUrl = () => {
+  const copyShortenedUrl = (): void => {
     try {
       navigator.clipboard.writeText(shortenedUrl)
       setSuccessMessage('Link copied to clipboard')
@@ -31,7 +31,7 @@ const ShortenedUrl = ({ linkId, setLinkId }: ShortenedUrlProps): JSX.Element => 
     }
   }
 
-  const newLink = () => {
+  const newLink = (): void => {
     setErrorMessage(undefined)
     setLinkId(undefined)
     setShortenedUrl('')
@@ -39,7 +39,7 @@ const ShortenedUrl = ({ linkId, setLinkId }: ShortenedUrlProps): JSX.Element => 
     setTextButtonVisible(false)
   }
 
-  const sendLinkByText = async () => {
+  const sendLinkByText = async (): Promise<void> => {
     try {
       setTextButtonVisible(false)
       await textLink(linkId)
