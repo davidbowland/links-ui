@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Alert from '@mui/material/Alert'
 import { Auth } from 'aws-amplify'
 import Button from '@mui/material/Button'
+import Grid from '@mui/material/Grid'
 import Snackbar from '@mui/material/Snackbar'
-import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 
@@ -71,37 +71,43 @@ const ShortenedUrl = ({ linkId, setLinkId }: ShortenedUrlProps): JSX.Element => 
 
   return (
     <>
-      <Stack spacing={2}>
-        <label>
-          <TextField
-            aria-readonly="true"
-            fullWidth
-            label="Shortened URL"
-            name="shortened-url"
-            type="text"
-            value={shortenedUrl}
-            variant="filled"
-          />
-        </label>
-        <Button fullWidth onClick={copyShortenedUrl} variant="contained">
-          Copy shortened URL
-        </Button>
-        {textButtonVisible && (
-          <Button
-            data-amplify-analytics-name="text-link-click"
-            data-amplify-analytics-on="click"
-            fullWidth
-            onClick={sendLinkByText}
-            variant="outlined"
-          >
-            Text me the link
+      <label>
+        <TextField
+          aria-readonly="true"
+          fullWidth
+          label="Shortened URL"
+          name="shortened-url"
+          type="text"
+          value={shortenedUrl}
+          variant="filled"
+        />
+      </label>
+      <Grid container>
+        <Grid sm={textButtonVisible ? 4 : 6} sx={{ p: '0.5em' }} xs={12}>
+          <Button fullWidth onClick={copyShortenedUrl} variant="contained">
+            Copy URL
           </Button>
+        </Grid>
+        {textButtonVisible && (
+          <Grid sm={4} sx={{ p: '0.5em' }} xs={12}>
+            <Button
+              data-amplify-analytics-name="text-link-click"
+              data-amplify-analytics-on="click"
+              fullWidth
+              onClick={sendLinkByText}
+              variant="outlined"
+            >
+              Text me the link
+            </Button>
+          </Grid>
         )}
-        <Button fullWidth onClick={newLink} variant="outlined">
-          Generate different link
-        </Button>
-        <Typography sx={{ textAlign: 'center' }}>Links automatically expire after 30 days</Typography>
-      </Stack>
+        <Grid sm={textButtonVisible ? 4 : 6} sx={{ p: '0.5em' }} xs={12}>
+          <Button fullWidth onClick={newLink} variant="outlined">
+            New link
+          </Button>
+        </Grid>
+      </Grid>
+      <Typography sx={{ textAlign: 'center' }}>Links automatically expire after 30 days</Typography>
       <Snackbar autoHideDuration={15_000} onClose={snackbarErrorClose} open={errorMessage !== undefined}>
         <Alert onClose={snackbarErrorClose} severity="error" variant="filled">
           {errorMessage}

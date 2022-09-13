@@ -1,3 +1,4 @@
+import Grid from '@mui/material/Grid'
 import { Helmet } from 'react-helmet'
 import React from 'react'
 
@@ -13,9 +14,11 @@ const RedirectPage = ({ params }: RedirectPageProps): JSX.Element => {
       <Helmet>
         <title>Links Redirect | dbowland.com</title>
       </Helmet>
-      <section style={{ padding: '50px' }}>
-        <Redirect linkId={params.linkId} />
-      </section>
+      <Grid style={{ padding: '50px' }}>
+        <div style={{ margin: 'auto', maxWidth: '700px' }}>
+          <Redirect linkId={params.linkId} />
+        </div>
+      </Grid>
     </main>
   )
 }

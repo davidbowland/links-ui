@@ -155,7 +155,7 @@ describe('LinkCreate component', () => {
         await generateLinkButton.click()
       })
 
-      const copyLinkButton = (await screen.findByText(/Copy shortened URL/i, {
+      const copyLinkButton = (await screen.findByText(/Copy URL/i, {
         selector: 'button',
       })) as HTMLButtonElement
       act(() => {
@@ -176,7 +176,7 @@ describe('LinkCreate component', () => {
         await generateLinkButton.click()
       })
 
-      const copyLinkButton = (await screen.findByText(/Copy shortened URL/i, {
+      const copyLinkButton = (await screen.findByText(/Copy URL/i, {
         selector: 'button',
       })) as HTMLButtonElement
       act(() => {
@@ -203,7 +203,7 @@ describe('LinkCreate component', () => {
         await generateLinkButton.click()
       })
 
-      const copyLinkButton = (await screen.findByText(/Copy shortened URL/i, {
+      const copyLinkButton = (await screen.findByText(/Copy URL/i, {
         selector: 'button',
       })) as HTMLButtonElement
       act(() => {
@@ -227,7 +227,7 @@ describe('LinkCreate component', () => {
         await generateLinkButton.click()
       })
 
-      const copyLinkButton = (await screen.findByText(/Copy shortened URL/i, {
+      const copyLinkButton = (await screen.findByText(/Copy URL/i, {
         selector: 'button',
       })) as HTMLButtonElement
       act(() => {
@@ -308,7 +308,7 @@ describe('LinkCreate component', () => {
         await generateLinkButton.click()
       })
 
-      const newLinkButton = (await screen.findByText(/Generate different link/i, {
+      const newLinkButton = (await screen.findByText(/New link/i, {
         selector: 'button',
       })) as HTMLButtonElement
       act(() => {

@@ -3,9 +3,10 @@ import Alert from '@mui/material/Alert'
 import { Auth } from 'aws-amplify'
 import Button from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress'
+import Grid from '@mui/material/Grid'
 import Snackbar from '@mui/material/Snackbar'
-import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
 
 import { createLink } from '@services/links'
 
@@ -59,34 +60,41 @@ const Create = ({ setLinkId, to }: CreateProps): JSX.Element => {
 
   return (
     <>
-      <Stack spacing={2}>
-        <label>
-          <TextField
+      <Grid container justifyContent="center">
+        <Grid item sx={{ p: '0.5em' }} xs={12}>
+          <label>
+            <TextField
+              disabled={isLoading}
+              error={urlError !== undefined}
+              fullWidth
+              helperText={urlError}
+              label="Target URL"
+              name="update-url"
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => setUrl(event.target.value)}
+              sx={{ height: '100%' }}
+              type="text"
+              value={url}
+              variant="filled"
+            />
+          </label>
+        </Grid>
+        <Grid item sm={6} sx={{ p: '0.5em' }} xs={12}>
+          <Button
+            data-amplify-analytics-name="generate-link-click"
+            data-amplify-analytics-on="click"
             disabled={isLoading}
-            error={urlError !== undefined}
             fullWidth
-            helperText={urlError}
-            label="Target URL"
-            name="update-url"
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setUrl(event.target.value)}
-            type="text"
-            value={url}
-            variant="filled"
-          />
-        </label>
-        <Button
-          data-amplify-analytics-name="generate-link-click"
-          data-amplify-analytics-on="click"
-          disabled={isLoading}
-          fullWidth
-          onClick={generateShortenedUrl}
-          startIcon={isLoading ? <CircularProgress color="inherit" size={14} /> : null}
-          variant="contained"
-        >
-          {isLoading ? 'Loading...' : 'Generate shortened URL'}
-        </Button>
-        {!isLoggedIn && <p style={{ textAlign: 'center' }}>Sign in to text yourself your shortened URL</p>}
-      </Stack>
+            onClick={generateShortenedUrl}
+            startIcon={isLoading ? <CircularProgress color="inherit" size={14} /> : null}
+            variant="contained"
+          >
+            {isLoading ? 'Loading...' : 'Generate shortened URL'}
+          </Button>
+        </Grid>
+      </Grid>
+      {!isLoggedIn && (
+        <Typography style={{ textAlign: 'center' }}>Sign in to text yourself your shortened URL</Typography>
+      )}
       <Snackbar autoHideDuration={15_000} onClose={snackbarErrorClose} open={errorMessage !== undefined}>
         <Alert onClose={snackbarErrorClose} severity="error" variant="filled">
           {errorMessage}

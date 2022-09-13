@@ -1,3 +1,4 @@
+import Grid from '@mui/material/Grid'
 import { Helmet } from 'react-helmet'
 import React from 'react'
 
@@ -12,9 +13,11 @@ const Index = (): JSX.Element => {
       <Helmet>
         <title>URL Shortener | dbowland.com</title>
       </Helmet>
-      <section style={{ padding: '50px' }}>
-        <LinkCreate to={to}></LinkCreate>
-      </section>
+      <Grid style={{ padding: '50px' }}>
+        <div style={{ margin: 'auto', maxWidth: '700px' }}>
+          <LinkCreate to={to}></LinkCreate>
+        </div>
+      </Grid>
     </main>
   )
 }
