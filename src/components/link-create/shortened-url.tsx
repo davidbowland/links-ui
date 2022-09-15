@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react'
 import Alert from '@mui/material/Alert'
 import { Auth } from 'aws-amplify'
 import Button from '@mui/material/Button'
+import Card from '@mui/material/Card'
+import CardActions from '@mui/material/CardActions'
+import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Grid'
 import Snackbar from '@mui/material/Snackbar'
 import TextField from '@mui/material/TextField'
@@ -71,43 +74,50 @@ const ShortenedUrl = ({ linkId, setLinkId }: ShortenedUrlProps): JSX.Element => 
 
   return (
     <>
-      <label>
-        <TextField
-          aria-readonly="true"
-          fullWidth
-          label="Shortened URL"
-          name="shortened-url"
-          type="text"
-          value={shortenedUrl}
-          variant="filled"
-        />
-      </label>
-      <Grid container>
-        <Grid sm={textButtonVisible ? 4 : 6} sx={{ p: '0.5em' }} xs={12}>
-          <Button fullWidth onClick={copyShortenedUrl} variant="contained">
-            Copy URL
-          </Button>
-        </Grid>
-        {textButtonVisible && (
-          <Grid sm={4} sx={{ p: '0.5em' }} xs={12}>
-            <Button
-              data-amplify-analytics-name="text-link-click"
-              data-amplify-analytics-on="click"
+      <Card sx={{ margin: 'auto', maxWidth: 700 }} variant="outlined">
+        <CardContent sx={{ textAlign: 'center' }}>
+          <label>
+            <TextField
+              aria-readonly="true"
               fullWidth
-              onClick={sendLinkByText}
-              variant="outlined"
-            >
-              Text me the link
-            </Button>
+              label="Shortened URL"
+              name="shortened-url"
+              type="text"
+              value={shortenedUrl}
+              variant="filled"
+            />
+          </label>
+          <Typography variant="caption">Links automatically expire after 30 days</Typography>
+        </CardContent>
+        <CardActions>
+          <Grid container>
+            <Grid sx={{ p: '0.5em' }} xs={12}>
+              <Button fullWidth onClick={copyShortenedUrl} variant="contained">
+                Copy URL
+              </Button>
+            </Grid>
+            {textButtonVisible && (
+              <Grid sm={6} sx={{ p: '0.5em' }} xs={12}>
+                <Button
+                  color="secondary"
+                  data-amplify-analytics-name="text-link-click"
+                  data-amplify-analytics-on="click"
+                  fullWidth
+                  onClick={sendLinkByText}
+                  variant="outlined"
+                >
+                  Text me the link
+                </Button>
+              </Grid>
+            )}
+            <Grid sm={textButtonVisible ? 6 : 12} sx={{ p: '0.5em' }} xs={12}>
+              <Button color="secondary" fullWidth onClick={newLink} variant="outlined">
+                New link
+              </Button>
+            </Grid>
           </Grid>
-        )}
-        <Grid sm={textButtonVisible ? 4 : 6} sx={{ p: '0.5em' }} xs={12}>
-          <Button fullWidth onClick={newLink} variant="outlined">
-            New link
-          </Button>
-        </Grid>
-      </Grid>
-      <Typography sx={{ textAlign: 'center' }}>Links automatically expire after 30 days</Typography>
+        </CardActions>
+      </Card>
       <Snackbar autoHideDuration={15_000} onClose={snackbarErrorClose} open={errorMessage !== undefined}>
         <Alert onClose={snackbarErrorClose} severity="error" variant="filled">
           {errorMessage}

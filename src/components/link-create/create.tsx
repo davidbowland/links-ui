@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react'
 import Alert from '@mui/material/Alert'
 import { Auth } from 'aws-amplify'
 import Button from '@mui/material/Button'
+import Card from '@mui/material/Card'
+import CardActions from '@mui/material/CardActions'
+import CardContent from '@mui/material/CardContent'
 import CircularProgress from '@mui/material/CircularProgress'
 import Grid from '@mui/material/Grid'
 import Snackbar from '@mui/material/Snackbar'
@@ -60,8 +63,8 @@ const Create = ({ setLinkId, to }: CreateProps): JSX.Element => {
 
   return (
     <>
-      <Grid container justifyContent="center">
-        <Grid item sx={{ p: '0.5em' }} xs={12}>
+      <Card sx={{ margin: 'auto', maxWidth: 700 }} variant="outlined">
+        <CardContent sx={{ textAlign: 'center' }}>
           <label>
             <TextField
               disabled={isLoading}
@@ -77,24 +80,28 @@ const Create = ({ setLinkId, to }: CreateProps): JSX.Element => {
               variant="filled"
             />
           </label>
-        </Grid>
-        <Grid item sm={6} sx={{ p: '0.5em' }} xs={12}>
-          <Button
-            data-amplify-analytics-name="generate-link-click"
-            data-amplify-analytics-on="click"
-            disabled={isLoading}
-            fullWidth
-            onClick={generateShortenedUrl}
-            startIcon={isLoading ? <CircularProgress color="inherit" size={14} /> : null}
-            variant="contained"
-          >
-            {isLoading ? 'Loading...' : 'Generate shortened URL'}
-          </Button>
-        </Grid>
-      </Grid>
-      {!isLoggedIn && (
-        <Typography style={{ textAlign: 'center' }}>Sign in to text yourself your shortened URL</Typography>
-      )}
+          {!isLoggedIn && (
+            <Typography variant="caption">Sign in or sign up to text yourself your shortened URL</Typography>
+          )}
+        </CardContent>
+        <CardActions sx={{ p: { sm: '25px', xs: '10px' } }}>
+          <Grid container justifyContent="center">
+            <Grid item sm={6} xs={12}>
+              <Button
+                data-amplify-analytics-name="generate-link-click"
+                data-amplify-analytics-on="click"
+                disabled={isLoading}
+                fullWidth
+                onClick={generateShortenedUrl}
+                startIcon={isLoading ? <CircularProgress color="inherit" size={14} /> : null}
+                variant="outlined"
+              >
+                {isLoading ? 'Loading...' : 'Generate shortened URL'}
+              </Button>
+            </Grid>
+          </Grid>
+        </CardActions>
+      </Card>
       <Snackbar autoHideDuration={15_000} onClose={snackbarErrorClose} open={errorMessage !== undefined}>
         <Alert onClose={snackbarErrorClose} severity="error" variant="filled">
           {errorMessage}

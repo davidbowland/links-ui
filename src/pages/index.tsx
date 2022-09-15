@@ -13,10 +13,8 @@ const Index = (): JSX.Element => {
       <Helmet>
         <title>URL Shortener | dbowland.com</title>
       </Helmet>
-      <Grid style={{ padding: '50px' }}>
-        <div style={{ margin: 'auto', maxWidth: '700px' }}>
-          <LinkCreate to={to}></LinkCreate>
-        </div>
+      <Grid sx={{ padding: { sm: '50px', xs: '25px 10px' } }}>
+        <LinkCreate to={to}></LinkCreate>
       </Grid>
     </main>
   )

@@ -14,10 +14,10 @@ const RedirectPage = ({ params }: RedirectPageProps): JSX.Element => {
       <Helmet>
         <title>Links Redirect | dbowland.com</title>
       </Helmet>
-      <Grid style={{ padding: '50px' }}>
-        <div style={{ margin: 'auto', maxWidth: '700px' }}>
+      <Grid container sx={{ padding: { sm: '50px', xs: '25px 10px' } }}>
+        <Grid item sx={{ m: 'auto', maxWidth: 700, width: '100%' }}>
           <Redirect linkId={params.linkId} />
-        </div>
+        </Grid>
       </Grid>
     </main>
   )
