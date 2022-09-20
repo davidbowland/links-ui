@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
+import AddLinkIcon from '@mui/icons-material/AddLink'
 import Alert from '@mui/material/Alert'
 import { Auth } from 'aws-amplify'
 import Button from '@mui/material/Button'
-import Card from '@mui/material/Card'
-import CardActions from '@mui/material/CardActions'
-import CardContent from '@mui/material/CardContent'
+import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import Grid from '@mui/material/Grid'
+import Paper from '@mui/material/Paper'
 import Snackbar from '@mui/material/Snackbar'
+import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
+import TextsmsIcon from '@mui/icons-material/Textsms'
 import Typography from '@mui/material/Typography'
 
 import { textLink } from '@services/links'
@@ -74,8 +76,8 @@ const ShortenedUrl = ({ linkId, setLinkId }: ShortenedUrlProps): JSX.Element => 
 
   return (
     <>
-      <Card sx={{ margin: 'auto', maxWidth: 700 }} variant="outlined">
-        <CardContent sx={{ textAlign: 'center' }}>
+      <Paper elevation={6} sx={{ margin: 'auto', maxWidth: 900 }}>
+        <Stack spacing={2} sx={{ p: { sm: '25px', xs: '10px' }, textAlign: 'center' }}>
           <label>
             <TextField
               aria-readonly="true"
@@ -88,36 +90,35 @@ const ShortenedUrl = ({ linkId, setLinkId }: ShortenedUrlProps): JSX.Element => 
             />
           </label>
           <Typography variant="caption">Links automatically expire after 30 days</Typography>
-        </CardContent>
-        <CardActions>
-          <Grid container>
-            <Grid sx={{ p: '0.5em' }} xs={12}>
-              <Button fullWidth onClick={copyShortenedUrl} variant="contained">
+          <Grid container spacing={2} sx={{ paddingRight: 2, width: '100%' }}>
+            <Grid item xs={12}>
+              <Button fullWidth onClick={copyShortenedUrl} startIcon={<ContentCopyIcon />} variant="contained">
                 Copy URL
               </Button>
             </Grid>
             {textButtonVisible && (
-              <Grid sm={6} sx={{ p: '0.5em' }} xs={12}>
+              <Grid item sm={6} xs={12}>
                 <Button
                   color="secondary"
                   data-amplify-analytics-name="text-link-click"
                   data-amplify-analytics-on="click"
                   fullWidth
                   onClick={sendLinkByText}
+                  startIcon={<TextsmsIcon />}
                   variant="outlined"
                 >
                   Text me the link
                 </Button>
               </Grid>
             )}
-            <Grid sm={textButtonVisible ? 6 : 12} sx={{ p: '0.5em' }} xs={12}>
-              <Button color="secondary" fullWidth onClick={newLink} variant="outlined">
+            <Grid item sm xs={12}>
+              <Button color="secondary" fullWidth onClick={newLink} startIcon={<AddLinkIcon />} variant="outlined">
                 New link
               </Button>
             </Grid>
           </Grid>
-        </CardActions>
-      </Card>
+        </Stack>
+      </Paper>
       <Snackbar autoHideDuration={15_000} onClose={snackbarErrorClose} open={errorMessage !== undefined}>
         <Alert onClose={snackbarErrorClose} severity="error" variant="filled">
           {errorMessage}
