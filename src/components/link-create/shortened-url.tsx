@@ -89,7 +89,7 @@ const ShortenedUrl = ({ linkId, setLinkId }: ShortenedUrlProps): JSX.Element => 
               variant="filled"
             />
           </label>
-          <Typography variant="caption">Links automatically expire after 30 days</Typography>
+          <Typography variant="caption">Links automatically expire after 365 days</Typography>
           <Grid container spacing={2} sx={{ paddingRight: 2, width: '100%' }}>
             <Grid item xs={12}>
               <Button fullWidth onClick={copyShortenedUrl} startIcon={<ContentCopyIcon />} variant="contained">
