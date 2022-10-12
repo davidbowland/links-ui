@@ -6,11 +6,13 @@ import Button from '@mui/material/Button'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
+import { QRCodeSVG } from 'qrcode.react'
 import Snackbar from '@mui/material/Snackbar'
 import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
 import TextsmsIcon from '@mui/icons-material/Textsms'
 import Typography from '@mui/material/Typography'
+import { useTheme } from '@mui/material/styles'
 
 import { textLink } from '@services/links'
 
@@ -24,6 +26,8 @@ const ShortenedUrl = ({ linkId, setLinkId }: ShortenedUrlProps): JSX.Element => 
   const [shortenedUrl, setShortenedUrl] = useState<string>('')
   const [successMessage, setSuccessMessage] = useState<string | undefined>(undefined)
   const [textButtonVisible, setTextButtonVisible] = useState(false)
+
+  const theme = useTheme()
 
   const copyShortenedUrl = (): void => {
     try {
@@ -115,6 +119,16 @@ const ShortenedUrl = ({ linkId, setLinkId }: ShortenedUrlProps): JSX.Element => 
               <Button color="secondary" fullWidth onClick={newLink} startIcon={<AddLinkIcon />} variant="outlined">
                 New link
               </Button>
+            </Grid>
+            <Grid item xs={12}>
+              <h2>QR code for link:</h2>
+              <QRCodeSVG
+                bgColor={theme.palette.background.paper}
+                fgColor={theme.palette.primary.main}
+                includeMargin={true}
+                size={160}
+                value={shortenedUrl}
+              />
             </Grid>
           </Grid>
         </Stack>
