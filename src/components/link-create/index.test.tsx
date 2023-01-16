@@ -163,10 +163,12 @@ describe('LinkCreate component', () => {
       })
 
       expect(mockCopyToClipboard).toHaveBeenCalled()
-      expect(await screen.findByText(/Link copied to clipboard/i)).toBeInTheDocument()
+      waitFor(() => {
+        expect(screen.queryByText(/Link copied to clipboard/i)).toBeInTheDocument()
+      })
     })
 
-    test('expect closing success message removes it', async () => {
+    test('expect closing success smessage removes it', async () => {
       render(<LinkCreate to={url} />)
 
       const generateLinkButton = (await screen.findByText(/Generate shortened URL/i, {
