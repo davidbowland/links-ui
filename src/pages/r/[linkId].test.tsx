@@ -1,12 +1,12 @@
 import '@testing-library/jest-dom'
-import React from 'react'
 import { mocked } from 'jest-mock'
+import React from 'react'
 import { render } from '@testing-library/react'
 
+import { linkId } from '@test/__mocks__'
 import PrivacyLink from '@components/privacy-link'
 import Redirect from '@components/redirect'
 import RedirectPage from './[linkId]'
-import { linkId } from '@test/__mocks__'
 
 jest.mock('@aws-amplify/analytics')
 jest.mock('@components/privacy-link')

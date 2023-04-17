@@ -10,15 +10,15 @@ export const link: Link = {
   url: 'https://dbowland.com/',
 }
 
-export const user: CognitoUserAmplify = ({
+export const user: CognitoUserAmplify = {
   attributes: {
     email: '',
     name: 'Steve',
     phone_number: '+1800JENNYCRAIG',
   },
-} as unknown) as CognitoUserAmplify
+} as unknown as CognitoUserAmplify
 
-export const theme = ({
+export const theme = {
   breakpoints: {
     keys: ['xs', 'sm', 'md', 'lg', 'xl'],
     values: { xs: 0, sm: 600, md: 900, lg: 1200, xl: 1536 },
@@ -238,4 +238,4 @@ export const theme = ({
     snackbar: 1400,
     tooltip: 1500,
   },
-} as unknown) as Theme
+} as unknown as Theme
