@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom'
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { Auth } from 'aws-amplify'
 import { mocked } from 'jest-mock'
 import React from 'react'
@@ -13,7 +13,6 @@ jest.mock('@aws-amplify/analytics')
 jest.mock('@services/links')
 
 describe('LinkCreate component', () => {
-  const consoleError = console.error
   const mockCopyToClipboard = jest.fn()
   const url = 'https://dbowland.com/'
 
@@ -30,10 +29,6 @@ describe('LinkCreate component', () => {
 
     mocked(Auth).currentAuthenticatedUser.mockResolvedValue(user)
     mocked(linkService).createLink.mockResolvedValue({ linkId })
-  })
-
-  afterAll(() => {
-    console.error = consoleError
   })
 
   describe('URL input', () => {
@@ -57,9 +52,7 @@ describe('LinkCreate component', () => {
       const generateLinkButton = (await screen.findByText(/Generate shortened URL/i, {
         selector: 'button',
       })) as HTMLButtonElement
-      await act(async () => {
-        await generateLinkButton.click()
-      })
+      fireEvent.click(generateLinkButton)
 
       expect(await screen.findByText(/Invalid URL/i)).toBeInTheDocument()
     })
@@ -70,9 +63,7 @@ describe('LinkCreate component', () => {
       const generateLinkButton = (await screen.findByText(/Generate shortened URL/i, {
         selector: 'button',
       })) as HTMLButtonElement
-      await act(async () => {
-        await generateLinkButton.click()
-      })
+      fireEvent.click(generateLinkButton)
 
       expect(await screen.findByText(/URL must be http or https/i)).toBeInTheDocument()
     })
@@ -81,16 +72,12 @@ describe('LinkCreate component', () => {
       render(<LinkCreate />)
 
       const urlInput = (await screen.findByLabelText(/Target URL/i)) as HTMLInputElement
-      act(() => {
-        fireEvent.change(urlInput, { target: { value: url } })
-      })
+      fireEvent.change(urlInput, { target: { value: url } })
 
       const generateLinkButton = (await screen.findByText(/Generate shortened URL/i, {
         selector: 'button',
       })) as HTMLButtonElement
-      act(() => {
-        generateLinkButton.click()
-      })
+      fireEvent.click(generateLinkButton)
 
       expect(mocked(linkService).createLink).toHaveBeenCalledWith(url)
     })
@@ -102,9 +89,7 @@ describe('LinkCreate component', () => {
       const generateLinkButton = (await screen.findByText(/Generate shortened URL/i, {
         selector: 'button',
       })) as HTMLButtonElement
-      await act(async () => {
-        await generateLinkButton.click()
-      })
+      fireEvent.click(generateLinkButton)
 
       expect(await screen.findByText(/Error generating shortened URL, please try again later/i)).toBeInTheDocument()
     })
@@ -116,13 +101,9 @@ describe('LinkCreate component', () => {
       const generateLinkButton = (await screen.findByText(/Generate shortened URL/i, {
         selector: 'button',
       })) as HTMLButtonElement
-      await act(async () => {
-        await generateLinkButton.click()
-      })
+      fireEvent.click(generateLinkButton)
       const closeSnackbarButton = (await screen.findByLabelText(/Close/i, { selector: 'button' })) as HTMLButtonElement
-      act(() => {
-        closeSnackbarButton.click()
-      })
+      fireEvent.click(closeSnackbarButton)
 
       expect(screen.queryByText(/Error generating shortened URL, please try again later/i)).not.toBeInTheDocument()
     })
@@ -135,9 +116,7 @@ describe('LinkCreate component', () => {
       const generateLinkButton = (await screen.findByText(/Generate shortened URL/i, {
         selector: 'button',
       })) as HTMLButtonElement
-      await act(async () => {
-        await generateLinkButton.click()
-      })
+      fireEvent.click(generateLinkButton)
 
       const urlInput: HTMLInputElement = (await screen.findByLabelText(/Shortened URL/i)) as HTMLInputElement
       await waitFor(() => {
@@ -151,21 +130,16 @@ describe('LinkCreate component', () => {
       const generateLinkButton = (await screen.findByText(/Generate shortened URL/i, {
         selector: 'button',
       })) as HTMLButtonElement
-      await act(async () => {
-        await generateLinkButton.click()
-      })
-
+      fireEvent.click(generateLinkButton)
       const copyLinkButton = (await screen.findByText(/Copy URL/i, {
         selector: 'button',
       })) as HTMLButtonElement
-      act(() => {
-        copyLinkButton.click()
-      })
+      fireEvent.click(copyLinkButton)
 
-      expect(mockCopyToClipboard).toHaveBeenCalled()
-      waitFor(() => {
+      await waitFor(() => {
         expect(screen.queryByText(/Link copied to clipboard/i)).toBeInTheDocument()
       })
+      expect(mockCopyToClipboard).toHaveBeenCalled()
     })
 
     test('expect closing success smessage removes it', async () => {
@@ -174,20 +148,13 @@ describe('LinkCreate component', () => {
       const generateLinkButton = (await screen.findByText(/Generate shortened URL/i, {
         selector: 'button',
       })) as HTMLButtonElement
-      await act(async () => {
-        await generateLinkButton.click()
-      })
-
+      fireEvent.click(generateLinkButton)
       const copyLinkButton = (await screen.findByText(/Copy URL/i, {
         selector: 'button',
       })) as HTMLButtonElement
-      act(() => {
-        copyLinkButton.click()
-      })
+      fireEvent.click(copyLinkButton)
       const closeSnackbarButton = (await screen.findByLabelText(/Close/i, { selector: 'button' })) as HTMLButtonElement
-      act(() => {
-        closeSnackbarButton.click()
-      })
+      fireEvent.click(closeSnackbarButton)
 
       expect(screen.queryByText(/Link copied to clipboard/i)).not.toBeInTheDocument()
     })
@@ -201,19 +168,14 @@ describe('LinkCreate component', () => {
       const generateLinkButton = (await screen.findByText(/Generate shortened URL/i, {
         selector: 'button',
       })) as HTMLButtonElement
-      await act(async () => {
-        await generateLinkButton.click()
-      })
-
+      fireEvent.click(generateLinkButton)
       const copyLinkButton = (await screen.findByText(/Copy URL/i, {
         selector: 'button',
       })) as HTMLButtonElement
-      act(() => {
-        copyLinkButton.click()
-      })
+      fireEvent.click(copyLinkButton)
 
-      expect(mockCopyToClipboard).toHaveBeenCalled()
       expect(await screen.findByText(/Could not copy link to clipboard/i)).toBeInTheDocument()
+      expect(mockCopyToClipboard).toHaveBeenCalled()
     })
 
     test('expect closing error message removes it', async () => {
@@ -225,20 +187,13 @@ describe('LinkCreate component', () => {
       const generateLinkButton = (await screen.findByText(/Generate shortened URL/i, {
         selector: 'button',
       })) as HTMLButtonElement
-      await act(async () => {
-        await generateLinkButton.click()
-      })
-
+      fireEvent.click(generateLinkButton)
       const copyLinkButton = (await screen.findByText(/Copy URL/i, {
         selector: 'button',
       })) as HTMLButtonElement
-      act(() => {
-        copyLinkButton.click()
-      })
+      fireEvent.click(copyLinkButton)
       const closeSnackbarButton = (await screen.findByLabelText(/Close/i, { selector: 'button' })) as HTMLButtonElement
-      act(() => {
-        closeSnackbarButton.click()
-      })
+      fireEvent.click(closeSnackbarButton)
 
       expect(screen.queryByText(/Could not copy link to clipboard/i)).not.toBeInTheDocument()
     })
@@ -251,9 +206,7 @@ describe('LinkCreate component', () => {
       const generateLinkButton = (await screen.findByText(/Generate shortened URL/i, {
         selector: 'button',
       })) as HTMLButtonElement
-      await act(async () => {
-        await generateLinkButton.click()
-      })
+      fireEvent.click(generateLinkButton)
 
       expect(screen.queryByText(/Check your text messages for the link/i)).not.toBeInTheDocument()
     })
@@ -264,19 +217,14 @@ describe('LinkCreate component', () => {
       const generateLinkButton = (await screen.findByText(/Generate shortened URL/i, {
         selector: 'button',
       })) as HTMLButtonElement
-      await act(async () => {
-        await generateLinkButton.click()
-      })
-
+      fireEvent.click(generateLinkButton)
       const textLinkButton = (await screen.findByText(/Text me the link/i, {
         selector: 'button',
       })) as HTMLButtonElement
-      act(() => {
-        textLinkButton.click()
-      })
+      fireEvent.click(textLinkButton)
 
-      expect(mocked(linkService).textLink).toHaveBeenCalledWith(linkId)
       expect(await screen.findByText(/Check your text messages for the link/i)).toBeInTheDocument()
+      expect(mocked(linkService).textLink).toHaveBeenCalledWith(linkId)
     })
 
     test('expect text throw displays error', async () => {
@@ -286,16 +234,11 @@ describe('LinkCreate component', () => {
       const generateLinkButton = (await screen.findByText(/Generate shortened URL/i, {
         selector: 'button',
       })) as HTMLButtonElement
-      await act(async () => {
-        await generateLinkButton.click()
-      })
-
+      fireEvent.click(generateLinkButton)
       const textLinkButton = (await screen.findByText(/Text me the link/i, {
         selector: 'button',
       })) as HTMLButtonElement
-      act(() => {
-        textLinkButton.click()
-      })
+      fireEvent.click(textLinkButton)
 
       expect(await screen.findByText(/Error texting link, please try again later/i)).toBeInTheDocument()
     })
@@ -306,16 +249,11 @@ describe('LinkCreate component', () => {
       const generateLinkButton = (await screen.findByText(/Generate shortened URL/i, {
         selector: 'button',
       })) as HTMLButtonElement
-      await act(async () => {
-        await generateLinkButton.click()
-      })
-
+      fireEvent.click(generateLinkButton)
       const newLinkButton = (await screen.findByText(/New link/i, {
         selector: 'button',
       })) as HTMLButtonElement
-      act(() => {
-        newLinkButton.click()
-      })
+      fireEvent.click(newLinkButton)
 
       expect(await screen.findByLabelText(/Target URL/i)).toBeInTheDocument()
       expect(await screen.findByText(/Generate shortened URL/i, { selector: 'button' })).toBeInTheDocument()

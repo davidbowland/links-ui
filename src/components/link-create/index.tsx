@@ -8,7 +8,7 @@ export interface LinkCreateProps {
 }
 
 const LinkCreate = ({ to }: LinkCreateProps): JSX.Element => {
-  const [linkId, setLinkId] = useState<string | undefined>(undefined)
+  const [linkId, setLinkId] = useState<string | undefined>()
 
   return linkId ? <ShortenedUrl linkId={linkId} setLinkId={setLinkId} /> : <Create setLinkId={setLinkId} to={to} />
 }

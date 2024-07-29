@@ -1,5 +1,5 @@
 /* eslint-disable sort-keys */
-import { CognitoUserAmplify, Link, Theme } from '@types'
+import { AmplifyUser, Link, Theme } from '@types'
 
 export const linkId = 'aeio'
 
@@ -10,13 +10,13 @@ export const link: Link = {
   url: 'https://dbowland.com/',
 }
 
-export const user: CognitoUserAmplify = {
+export const user: AmplifyUser = {
   attributes: {
     email: '',
     name: 'Steve',
     phone_number: '+1800JENNYCRAIG',
   },
-} as unknown as CognitoUserAmplify
+} as unknown as AmplifyUser
 
 export const theme = {
   breakpoints: {

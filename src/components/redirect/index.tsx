@@ -12,8 +12,8 @@ export interface RedirectProps {
 }
 
 const Redirect = ({ linkId }: RedirectProps): JSX.Element => {
-  const [error, setError] = useState<string | undefined>(undefined)
-  const [url, setUrl] = useState<string | undefined>(undefined)
+  const [error, setError] = useState<string | undefined>()
+  const [url, setUrl] = useState<string | undefined>()
 
   const fetchAndSetUrl = async (id: string): Promise<void> => {
     try {

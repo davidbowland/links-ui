@@ -19,11 +19,11 @@ export interface CreateProps {
 }
 
 const Create = ({ setLinkId, to }: CreateProps): JSX.Element => {
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined)
+  const [errorMessage, setErrorMessage] = useState<string | undefined>()
   const [isLoading, setIsLoading] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [url, setUrl] = useState(to ?? '')
-  const [urlError, setUrlError] = useState<string | undefined>(undefined)
+  const [urlError, setUrlError] = useState<string | undefined>()
 
   const generateShortenedUrl = async (): Promise<void> => {
     try {
@@ -45,7 +45,7 @@ const Create = ({ setLinkId, to }: CreateProps): JSX.Element => {
       setErrorMessage(undefined)
       setUrl('')
     } catch (error) {
-      console.error('generateShortenedUrl', error)
+      console.error('generateShortenedUrl', { error, url })
       setErrorMessage('Error generating shortened URL, please try again later')
     }
     setIsLoading(false)

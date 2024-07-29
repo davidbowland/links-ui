@@ -2,8 +2,8 @@ import { Auth } from 'aws-amplify'
 import { CognitoUserSession } from 'amazon-cognito-identity-js'
 
 import { createLink, fetchLink, textLink } from './links'
+import { http, HttpResponse, server } from '@test/setup-server'
 import { link, linkId } from '@test/__mocks__'
-import { rest, server } from '@test/setup-server'
 
 const baseUrl = process.env.GATSBY_LINK_API_BASE_URL
 jest.mock('@aws-amplify/analytics')
@@ -19,9 +19,9 @@ describe('Link service', () => {
 
     beforeAll(() => {
       server.use(
-        rest.post(`${baseUrl}/links`, async (req, res, ctx) => {
-          const body = postEndpoint(await req.json())
-          return res(body ? ctx.json(body) : ctx.status(400))
+        http.post(`${baseUrl}/links`, async ({ request }) => {
+          const body = postEndpoint(await request.json())
+          return body ? HttpResponse.json(body) : new HttpResponse(null, { status: 400 })
         })
       )
     })
@@ -44,12 +44,12 @@ describe('Link service', () => {
   describe('fetchLink', () => {
     beforeAll(() => {
       server.use(
-        rest.get(`${baseUrl}/links/:id`, async (req, res, ctx) => {
-          const { id } = req.params
+        http.get(`${baseUrl}/links/:id`, async ({ params }) => {
+          const { id } = params
           if (id !== linkId) {
-            return res(ctx.status(400))
+            return new HttpResponse(null, { status: 400 })
           }
-          return res(ctx.json(link))
+          return HttpResponse.json(link)
         })
       )
     })
@@ -65,13 +65,13 @@ describe('Link service', () => {
 
     beforeAll(() => {
       server.use(
-        rest.post(`${baseUrl}/links/:id/send-text`, async (req, res, ctx) => {
-          const { id } = req.params
+        http.post(`${baseUrl}/links/:id/send-text`, async ({ params, request }) => {
+          const { id } = params
           if (id !== linkId) {
-            return res(ctx.status(400))
+            return new HttpResponse(null, { status: 400 })
           }
-          const body = postEndpoint(await req.json())
-          return res(body ? ctx.json(body) : ctx.status(400))
+          const body = postEndpoint(await request.json())
+          return body ? HttpResponse.json(body) : new HttpResponse(null, { status: 400 })
         })
       )
     })

@@ -4,11 +4,11 @@ import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined'
 import React from 'react'
 import Stack from '@mui/material/Stack'
 
-import { AuthState, CognitoUserAmplify } from '@types'
+import { AmplifyUser, AuthState } from '@types'
 
 export interface LinksAuthenticatorProps {
   authState: AuthState
-  setLoggedInUser: (user: CognitoUserAmplify | undefined) => void
+  setLoggedInUser: (user: AmplifyUser | undefined) => void
   setShowLogin: (state: boolean) => void
 }
 

@@ -22,9 +22,9 @@ export interface ShortenedUrlProps {
 }
 
 const ShortenedUrl = ({ linkId, setLinkId }: ShortenedUrlProps): JSX.Element => {
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined)
+  const [errorMessage, setErrorMessage] = useState<string | undefined>()
   const [shortenedUrl, setShortenedUrl] = useState<string>('')
-  const [successMessage, setSuccessMessage] = useState<string | undefined>(undefined)
+  const [successMessage, setSuccessMessage] = useState<string | undefined>()
   const [textButtonVisible, setTextButtonVisible] = useState(false)
 
   const theme = useTheme()
@@ -35,7 +35,7 @@ const ShortenedUrl = ({ linkId, setLinkId }: ShortenedUrlProps): JSX.Element => 
       setSuccessMessage('Link copied to clipboard')
       setErrorMessage(undefined)
     } catch (error) {
-      console.error('copyShortenedUrl', error)
+      console.error('copyShortenedUrl', { error, shortenedUrl })
       setErrorMessage('Could not copy link to clipboard')
     }
   }
@@ -54,7 +54,7 @@ const ShortenedUrl = ({ linkId, setLinkId }: ShortenedUrlProps): JSX.Element => 
       await textLink(linkId)
       setSuccessMessage('Check your text messages for the link')
     } catch (error) {
-      console.error('sendLinkByText', error)
+      console.error('sendLinkByText', { error, linkId })
       setTextButtonVisible(true)
       setErrorMessage('Error texting link, please try again later')
     }

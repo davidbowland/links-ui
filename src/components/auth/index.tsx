@@ -4,7 +4,7 @@ import AppBar from '@mui/material/AppBar'
 import { Auth } from 'aws-amplify'
 import Toolbar from '@mui/material/Toolbar'
 
-import { AuthState, CognitoUserAmplify } from '@types'
+import { AmplifyUser, AuthState } from '@types'
 import LinksAuthenticator from './links-authenticator'
 import LoggedInBar from './logged-in-bar'
 import LoggedOutBar from './logged-out-bar'
@@ -15,7 +15,7 @@ export interface AuthenticatedProps {
 
 const Authenticated = ({ children }: AuthenticatedProps): JSX.Element => {
   const [authState, setAuthState] = useState<AuthState>('signIn')
-  const [loggedInUser, setLoggedInUser] = useState<CognitoUserAmplify | undefined>(undefined)
+  const [loggedInUser, setLoggedInUser] = useState<AmplifyUser | undefined>()
   const [showLogin, setShowLogin] = useState(false)
 
   useEffect(() => {

@@ -24,11 +24,11 @@ import Snackbar from '@mui/material/Snackbar'
 import SwipeableDrawer from '@mui/material/SwipeableDrawer'
 import Typography from '@mui/material/Typography'
 
-import { CognitoUserAmplify } from '@types'
+import { AmplifyUser } from '@types'
 
 export interface LoggedInBarProps {
-  loggedInUser: CognitoUserAmplify
-  setLoggedInUser: (user: CognitoUserAmplify | undefined) => void
+  loggedInUser: AmplifyUser
+  setLoggedInUser: (user: AmplifyUser | undefined) => void
 }
 
 const LoggedInBar = ({ loggedInUser, setLoggedInUser }: LoggedInBarProps): JSX.Element => {
@@ -42,9 +42,9 @@ const LoggedInBar = ({ loggedInUser, setLoggedInUser }: LoggedInBarProps): JSX.E
 
   const deleteAccountClick = async (): Promise<void> => {
     setShowDeleteDialog(false)
-    loggedInUser.deleteUser((err) => {
-      if (err) {
-        console.error('deleteAccountClick', err)
+    loggedInUser.deleteUser((error) => {
+      if (error) {
+        console.error('deleteAccountClick', { error })
         setShowDeleteErrorSnackbar(true)
       } else {
         closeMenu()

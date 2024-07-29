@@ -11,9 +11,7 @@ jest.mock('@aws-amplify/analytics')
 jest.mock('@services/links')
 
 describe('Redirect component', () => {
-  const consoleError = console.error
   const mockLocationReplace = jest.fn()
-  const windowLocationReplace = window.location.replace
 
   beforeAll(() => {
     console.error = jest.fn()
@@ -23,14 +21,6 @@ describe('Redirect component', () => {
     })
 
     mocked(linkService).fetchLink.mockResolvedValue(link)
-  })
-
-  afterAll(() => {
-    console.error = consoleError
-    Object.defineProperty(window, 'location', {
-      configurable: true,
-      value: { replace: windowLocationReplace },
-    })
   })
 
   test('expect rendering Redirect has redirect message', async () => {
