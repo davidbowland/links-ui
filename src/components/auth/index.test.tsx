@@ -211,7 +211,7 @@ describe('Authenticated component', () => {
       })
 
       test('expect delete account error shows snackbar', async () => {
-        ;(user.deleteUser as jest.Mock).mockImplementationOnce((callback) => callback('Thar be errors here'))
+        jest.mocked(user).deleteUser.mockImplementationOnce((callback) => callback(new Error('Thar be errors here')))
 
         render(
           <Authenticated>
